@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -16,16 +15,24 @@
   --blue:#3b82f6;--blue2:#60a5fa;--green:#22c55e;--purple:#8b5cf6;
   --text:#e2eaf8;--text2:#8a9abb;--text3:#4a6080;
   --r:8px;--r2:12px;--r3:16px;
+  --font-body:'Cairo',sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;direction:rtl}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);overflow-x:hidden;direction:rtl}
+body.ltr{direction:ltr;font-family:'Rajdhani','Cairo',sans-serif}
+body.ltr .nav-logo{flex-direction:row-reverse}
+body.ltr .nav-logo-text,.body.ltr .nav-logo-sub{text-align:left}
+body.ltr .foot-brand p{text-align:left}
+body.ltr .foot-brand-meta{text-align:left}
+body.ltr .ecu-table th{text-align:left}
+body.ltr .bar-lbl{text-align:left}
+body.ltr .hero-content{margin-right:0;margin-left:auto}
 
 /* NOISE + GRID */
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.5}
 body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(59,130,246,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.025) 1px,transparent 1px);background-size:64px 64px;pointer-events:none;z-index:0}
 
-/* ═══ SCROLLBAR ═══ */
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:var(--bg2)}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
@@ -45,8 +52,8 @@ nav{
   background:linear-gradient(135deg,var(--accent),var(--accentd));
   border-radius:9px;display:flex;align-items:center;justify-content:center;
   flex-shrink:0;box-shadow:0 0 16px rgba(249,115,22,.3);
+  font-size:18px;
 }
-.nav-logo-icon svg{width:20px;height:20px}
 .nav-logo-text{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:var(--text);letter-spacing:.04em;line-height:1.2}
 .nav-logo-text span{color:var(--accent)}
 .nav-logo-sub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:.1em}
@@ -64,9 +71,42 @@ nav{
   font-weight:700 !important;font-size:13px !important;
   transition:background .2s,transform .15s,box-shadow .2s !important;
   white-space:nowrap;flex-shrink:0;
-  box-shadow:0 0 0 0 rgba(249,115,22,.4);
 }
 .nav-cta:hover{background:var(--accent2) !important;transform:translateY(-1px);box-shadow:0 4px 20px rgba(249,115,22,.3) !important}
+
+/* ═══ LANGUAGE SWITCHER ═══ */
+.lang-switcher{
+  position:relative;flex-shrink:0;
+}
+.lang-btn{
+  display:flex;align-items:center;gap:6px;
+  padding:7px 12px;background:var(--card);border:1px solid var(--border);
+  border-radius:8px;cursor:pointer;color:var(--text2);
+  font-family:'IBM Plex Mono',monospace;font-size:11px;
+  transition:border-color .2s,color .2s;white-space:nowrap;
+}
+.lang-btn:hover{border-color:var(--accent);color:var(--text)}
+.lang-btn svg{width:14px;height:14px;flex-shrink:0}
+.lang-flag{font-size:14px}
+.lang-dropdown{
+  position:absolute;top:calc(100% + 6px);left:0;right:auto;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:10px;overflow:hidden;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+  display:none;min-width:140px;z-index:300;
+}
+body.ltr .lang-dropdown{left:auto;right:0}
+.lang-dropdown.open{display:block}
+.lang-option{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text2);
+  transition:background .15s,color .15s;
+  white-space:nowrap;
+}
+.lang-option:hover{background:rgba(249,115,22,.08);color:var(--text)}
+.lang-option.active{color:var(--accent);background:rgba(249,115,22,.06)}
+.lang-option-flag{font-size:16px}
 
 /* hamburger */
 .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:none;background:none}
@@ -103,10 +143,8 @@ nav{
 .hero-orb-1{width:500px;height:500px;background:radial-gradient(circle,rgba(249,115,22,.11) 0%,transparent 70%);top:-80px;right:-60px;animation:orbF 9s ease-in-out infinite}
 .hero-orb-2{width:420px;height:420px;background:radial-gradient(circle,rgba(59,130,246,.07) 0%,transparent 70%);bottom:-40px;left:-80px;animation:orbF 11s ease-in-out infinite reverse}
 @keyframes orbF{0%,100%{transform:translate(0,0)}50%{transform:translate(24px,-32px)}}
-
 .hero-content{max-width:660px;position:relative;z-index:1;animation:heroIn .8s ease both}
 @keyframes heroIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
-
 .hero-badge{
   display:inline-flex;align-items:center;gap:8px;
   padding:5px 14px;background:rgba(249,115,22,.08);
@@ -115,7 +153,6 @@ nav{
 .hero-badge-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 2s infinite}
 @keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
 .hero-badge span{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.07em}
-
 .hero-title{
   font-family:'Orbitron',monospace;
   font-size:clamp(34px,5.5vw,64px);
@@ -126,7 +163,6 @@ nav{
 .ht-ver{font-size:.38em;color:var(--text3);font-weight:400;vertical-align:middle;margin-right:6px}
 .hero-sub{font-family:'Rajdhani',sans-serif;font-size:clamp(17px,2.2vw,22px);font-weight:400;color:var(--text2);margin-bottom:18px;letter-spacing:.02em}
 .hero-desc{font-size:14px;color:var(--text3);line-height:1.75;margin-bottom:32px;max-width:540px}
-
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:48px}
 .btn-primary{
   display:inline-flex;align-items:center;gap:8px;
@@ -150,6 +186,32 @@ nav{
 .btn-secondary:hover{border-color:var(--accent);background:rgba(249,115,22,.05);transform:translateY(-2px)}
 .btn-secondary svg{width:16px;height:16px;flex-shrink:0}
 
+/* ═══ DOWNLOAD BUTTON ═══ */
+.btn-download{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:13px 28px;
+  background:linear-gradient(135deg,#1a2d4d,#0d1a30);
+  color:var(--blue2);
+  border:1px solid rgba(59,130,246,.35);border-radius:8px;
+  font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;
+  text-decoration:none;letter-spacing:.04em;
+  transition:all .25s;position:relative;overflow:hidden;cursor:pointer;
+}
+.btn-download::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(59,130,246,.08) 0%,transparent 60%);
+}
+.btn-download:hover{
+  border-color:var(--blue2);
+  background:linear-gradient(135deg,#1e3560,#0f2040);
+  transform:translateY(-2px);
+  box-shadow:0 8px 28px rgba(59,130,246,.22);
+  color:#fff;
+}
+.btn-download svg{width:18px;height:18px;flex-shrink:0;position:relative}
+.btn-download-text{position:relative}
+.btn-download-sub{display:block;font-size:10px;font-weight:400;color:var(--text3);font-family:'IBM Plex Mono',monospace;letter-spacing:.05em;margin-top:1px}
+
 .hero-stats{display:flex;gap:36px;flex-wrap:wrap}
 .hero-stat-val{font-family:'Orbitron',monospace;font-size:26px;font-weight:900;color:var(--text);display:block}
 .hero-stat-lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:.08em;text-transform:uppercase}
@@ -164,6 +226,51 @@ nav{
 .mock-tabs{display:flex;gap:2px;background:var(--bg2);border-radius:5px;padding:3px;margin-bottom:12px;overflow-x:auto}
 .mock-tab{padding:5px 9px;border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);white-space:nowrap;cursor:default}
 .mock-tab.a{background:var(--card);color:var(--accent)}
+
+/* ═══ DOWNLOAD SECTION ═══ */
+.dl-sec{background:linear-gradient(135deg,rgba(59,130,246,.06) 0%,rgba(249,115,22,.04) 100%);border-top:1px solid rgba(59,130,246,.15);border-bottom:1px solid rgba(59,130,246,.15);padding:64px 5%}
+.dl-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center}
+.dl-info-badge{display:inline-flex;align-items:center;gap:7px;padding:4px 12px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);border-radius:100px;margin-bottom:16px}
+.dl-info-badge span{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue2);letter-spacing:.07em}
+.dl-title{font-family:'Orbitron',monospace;font-size:clamp(22px,3vw,34px);font-weight:900;color:var(--text);margin-bottom:12px;line-height:1.15}
+.dl-title em{color:var(--blue2);font-style:normal}
+.dl-desc{font-size:13px;color:var(--text2);line-height:1.7;max-width:480px;margin-bottom:24px}
+.dl-specs{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:28px}
+.dl-spec{display:flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3)}
+.dl-spec svg{width:13px;height:13px;color:var(--blue2)}
+.dl-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-dl-main{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 32px;background:var(--blue);color:#fff;border-radius:9px;
+  font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;
+  text-decoration:none;letter-spacing:.04em;
+  transition:all .25s;position:relative;overflow:hidden;cursor:pointer;border:none;
+}
+.btn-dl-main::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.15),transparent 60%)}
+.btn-dl-main:hover{background:#2563eb;transform:translateY(-2px);box-shadow:0 8px 30px rgba(59,130,246,.35)}
+.btn-dl-main svg{width:20px;height:20px;flex-shrink:0;position:relative}
+.btn-dl-alt{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 22px;background:transparent;color:var(--blue2);
+  border:1px solid rgba(59,130,246,.3);border-radius:9px;
+  font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;
+  text-decoration:none;letter-spacing:.03em;
+  transition:all .25s;cursor:pointer;
+}
+.btn-dl-alt:hover{border-color:var(--blue2);background:rgba(59,130,246,.07);transform:translateY(-2px)}
+.btn-dl-alt svg{width:16px;height:16px}
+.dl-card{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:32px;min-width:220px;text-align:center;
+}
+.dl-card-ver{font-family:'Orbitron',monospace;font-size:30px;font-weight:900;color:var(--accent);display:block;margin-bottom:4px}
+.dl-card-name{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text2);letter-spacing:.08em;margin-bottom:16px;display:block}
+.dl-card-stats{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.dl-card-stat{display:flex;justify-content:space-between;gap:16px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:10px;padding:6px 0;border-bottom:1px solid var(--border2)}
+.dl-card-stat:last-child{border-bottom:none}
+.dl-card-stat-k{color:var(--text3)}
+.dl-card-stat-v{color:var(--text2)}
+.dl-sha{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);word-break:break-all;background:var(--bg2);padding:8px;border-radius:6px;text-align:left;direction:ltr}
 
 /* ═══ SECTION COMMONS ═══ */
 section{padding:88px 5%;position:relative;z-index:1}
@@ -187,6 +294,9 @@ section{padding:88px 5%;position:relative;z-index:1}
 .pip-step:not(:first-child){margin-right:28px}
 .pip-step::before{content:'←';position:absolute;right:-22px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:16px}
 .pip-step:first-child::before{display:none}
+body.ltr .pip-step:not(:first-child){margin-right:0;margin-left:28px}
+body.ltr .pip-step::before{content:'→';right:auto;left:-22px}
+body.ltr .pip-step:first-child::before{display:none}
 .pip-step:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 0 20px rgba(249,115,22,.12)}
 .pip-num{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:10px;letter-spacing:.07em}
 .pip-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
@@ -218,6 +328,7 @@ section{padding:88px 5%;position:relative;z-index:1}
 .ecu-table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border2);margin-bottom:30px}
 .ecu-table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:11px;white-space:nowrap}
 .ecu-table th{background:var(--bg3);color:var(--text3);padding:10px 14px;text-align:right;font-weight:500;letter-spacing:.05em;border-bottom:1px solid var(--border2)}
+body.ltr .ecu-table th{text-align:left}
 .ecu-table td{padding:10px 14px;border-bottom:1px solid var(--border2);color:var(--text2)}
 .ecu-table tr:last-child td{border-bottom:none}
 .ecu-table tr:hover td{background:rgba(255,255,255,.015)}
@@ -241,6 +352,7 @@ section{padding:88px 5%;position:relative;z-index:1}
 .d-arr{color:var(--text3)}
 .d-new{background:rgba(34,197,94,.12);color:#86efac;padding:3px 7px;border-radius:4px}
 .d-op{margin-right:auto;background:rgba(139,92,246,.12);color:#c4b5fd;padding:2px 8px;border-radius:4px;font-size:9px}
+body.ltr .d-op{margin-right:0;margin-left:auto}
 .d-cnt{font-size:9px;color:var(--green);white-space:nowrap}
 
 /* ═══ SUPPORT ═══ */
@@ -276,6 +388,7 @@ section{padding:88px 5%;position:relative;z-index:1}
 .lic-card:hover{transform:translateY(-3px)}
 .lic-card.feat{border-color:var(--accent);background:linear-gradient(135deg,rgba(249,115,22,.05) 0%,var(--card) 60%)}
 .lic-badge{position:absolute;top:13px;left:13px;padding:3px 10px;background:var(--accent);color:#fff;border-radius:100px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.07em}
+body.ltr .lic-badge{left:auto;right:13px}
 .lic-plan{font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:var(--text2);letter-spacing:.06em;margin-bottom:8px;text-transform:uppercase}
 .lic-price{font-family:'Orbitron',monospace;font-size:32px;font-weight:900;color:var(--text);line-height:1;margin-bottom:4px}
 .lic-period{font-size:11px;color:var(--text3);margin-bottom:22px;font-family:'IBM Plex Mono',monospace}
@@ -307,15 +420,67 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
 .fi{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
 .fi.vis{opacity:1;transform:none}
 
-/* ═══ BAR ROWS (hero mock) ═══ */
+/* BAR ROWS */
 .bar-row{display:flex;align-items:center;gap:9px;margin-bottom:9px}
 .bar-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);width:62px;text-align:right;white-space:nowrap;flex-shrink:0}
+body.ltr .bar-lbl{text-align:left}
 .bar-track{flex:1;height:7px;background:var(--bg2);border-radius:4px;overflow:hidden}
 .bar-fill{height:100%;border-radius:4px}
 .bar-val{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text2);width:26px;flex-shrink:0}
 
+/* ═══ DOWNLOAD MODAL ═══ */
+.dl-modal-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(4,6,14,.85);backdrop-filter:blur(10px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.dl-modal-overlay.open{opacity:1;pointer-events:all}
+.dl-modal{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:40px;max-width:480px;width:90%;
+  transform:translateY(24px);transition:transform .3s;
+  position:relative;
+}
+.dl-modal-overlay.open .dl-modal{transform:none}
+.dl-modal-close{
+  position:absolute;top:14px;left:14px;width:30px;height:30px;
+  background:var(--bg2);border:1px solid var(--border2);border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--text3);transition:color .2s,border-color .2s;
+}
+body.ltr .dl-modal-close{left:auto;right:14px}
+.dl-modal-close:hover{color:var(--text);border-color:var(--accent)}
+.dl-modal-close svg{width:15px;height:15px}
+.dl-modal-icon{
+  width:64px;height:64px;border-radius:16px;
+  background:linear-gradient(135deg,var(--blue),#1d4ed8);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;box-shadow:0 0 30px rgba(59,130,246,.25);
+}
+.dl-modal-icon svg{width:32px;height:32px;color:#fff}
+.dl-modal-title{font-family:'Orbitron',monospace;font-size:22px;font-weight:900;color:var(--text);text-align:center;margin-bottom:6px}
+.dl-modal-ver{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);text-align:center;margin-bottom:20px;letter-spacing:.07em}
+.dl-modal-info{background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:16px;margin-bottom:22px}
+.dl-modal-row{display:flex;justify-content:space-between;padding:6px 0;font-family:'IBM Plex Mono',monospace;font-size:10px;border-bottom:1px solid var(--border2)}
+.dl-modal-row:last-child{border-bottom:none}
+.dl-modal-row-k{color:var(--text3)}
+.dl-modal-row-v{color:var(--text2)}
+.dl-modal-btn{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:12px;
+  padding:15px 24px;background:var(--blue);color:#fff;border-radius:10px;
+  font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;
+  text-decoration:none;letter-spacing:.04em;
+  transition:all .25s;cursor:pointer;border:none;position:relative;overflow:hidden;
+}
+.dl-modal-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.15),transparent 60%)}
+.dl-modal-btn:hover{background:#2563eb;box-shadow:0 8px 30px rgba(59,130,246,.35)}
+.dl-modal-btn svg{width:22px;height:22px;flex-shrink:0;position:relative}
+.dl-modal-note{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);text-align:center;margin-top:14px;line-height:1.6}
+
 /* ══════════════ RESPONSIVE ══════════════ */
 @media(max-width:1100px){.hero-visual{display:none}.hero-content{max-width:100%}}
+@media(max-width:960px){.dl-inner{grid-template-columns:1fr}.dl-card{display:none}}
 @media(max-width:900px){
   .sup-grid{grid-template-columns:1fr}
   .foot-top{grid-template-columns:1fr 1fr}
@@ -335,11 +500,12 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
   .lic-grid{grid-template-columns:1fr}
   .foot-top{grid-template-columns:1fr;gap:28px}
   .foot-bottom{flex-direction:column;text-align:center}
+  .dl-sec{padding:48px 4%}
 }
 @media(max-width:480px){
   .hero-title{font-size:clamp(26px,9vw,38px)}
   .hero-actions{flex-direction:column}
-  .btn-primary,.btn-secondary{justify-content:center;width:100%}
+  .btn-primary,.btn-secondary,.btn-download{justify-content:center;width:100%}
   .feat-grid{grid-template-columns:1fr}
   .ecu-stats{grid-template-columns:repeat(2,1fr)}
   .sup-btns{flex-direction:column}
@@ -348,22 +514,42 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
   .d-off{width:auto}
   .sec-title{font-size:clamp(19px,6vw,28px)}
   section{padding:52px 4%}
+  .dl-btns{flex-direction:column}
+  .btn-dl-main,.btn-dl-alt{justify-content:center}
 }
 </style>
 </head>
 <body>
 
+<!-- ══════════════════ DOWNLOAD MODAL ══════════════════ -->
+<div class="dl-modal-overlay" id="dlModal">
+  <div class="dl-modal">
+    <div class="dl-modal-close" onclick="closeDlModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </div>
+    <div class="dl-modal-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    </div>
+    <div class="dl-modal-title">ECU Intelligence Pro</div>
+    <div class="dl-modal-ver" data-i18n="dl_modal_ver">v5.0.0 — Windows x64</div>
+    <div class="dl-modal-info">
+      <div class="dl-modal-row"><span class="dl-modal-row-k" data-i18n="dl_size">الحجم</span><span class="dl-modal-row-v">48.7 MB</span></div>
+      <div class="dl-modal-row"><span class="dl-modal-row-k" data-i18n="dl_os">نظام التشغيل</span><span class="dl-modal-row-v">Windows 10/11 x64</span></div>
+      <div class="dl-modal-row"><span class="dl-modal-row-k" data-i18n="dl_release">تاريخ الإصدار</span><span class="dl-modal-row-v">2026-06-01</span></div>
+      <div class="dl-modal-row"><span class="dl-modal-row-k" data-i18n="dl_license_req">الترخيص</span><span class="dl-modal-row-v" data-i18n="dl_license_req_v">مطلوب (HWID)</span></div>
+    </div>
+    <a href="https://wa.me/970595438486" class="dl-modal-btn" target="_blank">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span data-i18n="dl_modal_cta">تنزيل البرنامج</span>
+    </a>
+    <div class="dl-modal-note" data-i18n="dl_modal_note">تواصل عبر WhatsApp للحصول على رابط التنزيل والترخيص · +970 595 438 486</div>
+  </div>
+</div>
+
 <!-- ══════════════════ NAV ══════════════════ -->
 <nav id="nav">
   <a href="#" class="nav-logo">
-    <div class="nav-logo-icon">
-      <!-- CPU/ECU icon -->
-        <h2 style="color: white;">⚙</h2>
-
-        <rect x="7" y="7" width="10" height="10" rx="1"/>
-        <path d="M9 1v2M12 1v2M15 1v2M9 21v2M12 21v2M15 21v2M1 9h2M1 12h2M1 15h2M21 9h2M21 12h2M21 15h2"/>
-      </svg>
-    </div>
+    <div class="nav-logo-icon"><h2 style="color: white;">⚙</h2></div>
     <div>
       <div class="nav-logo-text">ECU<span>INTEL</span> PRO</div>
       <div class="nav-logo-sub">v5.0 · 7-STAGE PIPELINE</div>
@@ -373,14 +559,30 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
   <div class="nav-spacer"></div>
 
   <ul class="nav-links">
-    <li><a href="#pipeline">خط الأنابيب</a></li>
-    <li><a href="#features">الميزات</a></li>
-    <li><a href="#ecu-db">قاعدة البيانات</a></li>
-    <li><a href="#diff-learning">التعلم الذكي</a></li>
-    <li><a href="#support">الدعم</a></li>
-    <li><a href="#license">التراخيص</a></li>
-    <li><a href="https://wa.me/970595438486" class="nav-cta">احصل على الترخيص</a></li>
+    <li><a href="#pipeline" data-i18n="nav_pipeline">خط الأنابيب</a></li>
+    <li><a href="#features" data-i18n="nav_features">الميزات</a></li>
+    <li><a href="#ecu-db" data-i18n="nav_db">قاعدة البيانات</a></li>
+    <li><a href="#download" data-i18n="nav_download">تنزيل</a></li>
+    <li><a href="#support" data-i18n="nav_support">الدعم</a></li>
+    <li><a href="#license" data-i18n="nav_license">التراخيص</a></li>
+    <li><a href="https://wa.me/970595438486" class="nav-cta" data-i18n="nav_cta">احصل على الترخيص</a></li>
   </ul>
+
+  <!-- Language Switcher -->
+  <div class="lang-switcher" id="langSwitcher">
+    <div class="lang-btn" id="langBtn" onclick="toggleLang()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      <span class="lang-flag" id="langFlag">🇸🇦</span>
+      <span id="langLabel">AR</span>
+    </div>
+    <div class="lang-dropdown" id="langDropdown">
+      <div class="lang-option active" data-lang="ar" onclick="setLang('ar')"><span class="lang-option-flag">🇸🇦</span> العربية</div>
+      <div class="lang-option" data-lang="en" onclick="setLang('en')"><span class="lang-option-flag">🇬🇧</span> English</div>
+      <div class="lang-option" data-lang="fr" onclick="setLang('fr')"><span class="lang-option-flag">🇫🇷</span> Français</div>
+      <div class="lang-option" data-lang="de" onclick="setLang('de')"><span class="lang-option-flag">🇩🇪</span> Deutsch</div>
+      <div class="lang-option" data-lang="tr" onclick="setLang('tr')"><span class="lang-option-flag">🇹🇷</span> Türkçe</div>
+    </div>
+  </div>
 
   <button class="nav-hamburger" id="ham" aria-label="قائمة">
     <span></span><span></span><span></span>
@@ -388,29 +590,33 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
 </nav>
 
 <div class="nav-mobile" id="mobMenu">
-  <a href="#pipeline" onclick="closeMob()">
+  <a href="#pipeline" onclick="closeMob()" data-i18n-mob="nav_pipeline">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 3h14M5 8h14M5 13h14M5 18h14"/></svg>
-    خط الأنابيب
+    <span data-i18n="nav_pipeline">خط الأنابيب</span>
   </a>
   <a href="#features" onclick="closeMob()">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-    الميزات
+    <span data-i18n="nav_features">الميزات</span>
   </a>
   <a href="#ecu-db" onclick="closeMob()">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.657-4.03 3-9 3S3 13.657 3 12M21 5v14c0 1.657-4.03 3-9 3S3 20.657 3 19V5"/></svg>
-    قاعدة البيانات
+    <span data-i18n="nav_db">قاعدة البيانات</span>
+  </a>
+  <a href="#download" onclick="closeMob()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    <span data-i18n="nav_download">تنزيل</span>
   </a>
   <a href="#support" onclick="closeMob()">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-    الدعم الفني
+    <span data-i18n="nav_support">الدعم الفني</span>
   </a>
   <a href="#license" onclick="closeMob()">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-    التراخيص
+    <span data-i18n="nav_license">التراخيص</span>
   </a>
   <a href="https://wa.me/970595438486" class="mob-cta" onclick="closeMob()">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    احصل على الترخيص
+    <span data-i18n="nav_cta">احصل على الترخيص</span>
   </a>
 </div>
 
@@ -422,7 +628,7 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
   <div class="hero-content">
     <div class="hero-badge">
       <span class="hero-badge-dot"></span>
-      <span>الإصدار 5.0 — 7 مراحل متكاملة</span>
+      <span data-i18n="hero_badge">الإصدار 5.0 — 7 مراحل متكاملة</span>
     </div>
 
     <h1 class="hero-title">
@@ -430,17 +636,24 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
       <span class="ht-main">Pro</span><span class="ht-ver">v5.0</span>
     </h1>
 
-    <p class="hero-sub">منظومة معايرة وحدات التحكم الاحترافية</p>
-    <p class="hero-desc">أداة متكاملة من 7 مراحل لتحليل ملفات BIN ومعايرة وحدات التحكم الإلكترونية. تدعم أكثر من 32 متغيراً من Bosch، Delphi، Siemens، Marelli، Continental، Denso وغيرها مع محرك تعلم الفروقات التلقائي.</p>
+    <p class="hero-sub" data-i18n="hero_sub">منظومة معايرة وحدات التحكم الاحترافية</p>
+    <p class="hero-desc" data-i18n="hero_desc">أداة متكاملة من 7 مراحل لتحليل ملفات BIN ومعايرة وحدات التحكم الإلكترونية. تدعم أكثر من 32 متغيراً من Bosch، Delphi، Siemens، Marelli، Continental، Denso وغيرها مع محرك تعلم الفروقات التلقائي.</p>
 
     <div class="hero-actions">
       <a href="https://wa.me/970595438486" class="btn-primary">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        احصل على الترخيص
+        <span data-i18n="nav_cta">احصل على الترخيص</span>
       </a>
+      <button class="btn-download" onclick="openDlModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span class="btn-download-text">
+          <span data-i18n="hero_dl_btn">تنزيل البرنامج</span>
+          <span class="btn-download-sub">v5.0 · Windows x64 · 48.7 MB</span>
+        </span>
+      </button>
       <a href="#features" class="btn-secondary">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-        استكشف الميزات
+        <span data-i18n="hero_explore">استكشف الميزات</span>
       </a>
     </div>
 
@@ -454,8 +667,8 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
         <span class="hero-stat-lbl">Pipeline Stages</span>
       </div>
       <div class="hero-stat">
-        <span class="hero-stat-val">6</span>
-        <span class="hero-stat-lbl">Languages</span>
+        <span class="hero-stat-val">5</span>
+        <span class="hero-stat-lbl" data-i18n="stat_lang">Languages</span>
       </div>
       <div class="hero-stat">
         <span class="hero-stat-val">24/7</span>
@@ -464,7 +677,6 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
     </div>
   </div>
 
-  <!-- hero visual -->
   <div class="hero-visual">
     <div class="mock-win">
       <div class="mock-bar">
@@ -475,8 +687,8 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
       </div>
       <div class="mock-body">
         <div class="mock-tabs">
-          <div class="mock-tab a">التحليل</div>
-          <div class="mock-tab">خرائط الوقود</div>
+          <div class="mock-tab a" data-i18n="mock_analysis">التحليل</div>
+          <div class="mock-tab">Fuel Maps</div>
           <div class="mock-tab">Boost Map</div>
           <div class="mock-tab">DPF/EGR/IMMO</div>
           <div class="mock-tab">Script Engine</div>
@@ -514,79 +726,125 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
 
 <div class="glow-sep"></div>
 
+<!-- ══════════════════ DOWNLOAD SECTION ══════════════════ -->
+<section id="download" class="dl-sec">
+  <div class="dl-inner fi">
+    <div>
+      <div class="dl-info-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span data-i18n="dl_badge">تنزيل مجاني — الترخيص مطلوب</span>
+      </div>
+      <h2 class="dl-title"><span data-i18n="dl_title_1">تنزيل</span> <em>ECU Intelligence Pro</em></h2>
+      <p class="dl-desc" data-i18n="dl_desc">حمّل البرنامج مجاناً وابدأ التجربة. يتطلب ترخيصاً نشطاً مرتبطاً بجهازك للتشغيل. تواصل معنا عبر WhatsApp للحصول على الترخيص.</p>
+      <div class="dl-specs">
+        <div class="dl-spec">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          Windows 10/11 x64
+        </div>
+        <div class="dl-spec">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span data-i18n="dl_spec_size">48.7 MB · .exe Installer</span>
+        </div>
+        <div class="dl-spec">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span data-i18n="dl_spec_ver">v5.0.0 · 2026-06-01</span>
+        </div>
+        <div class="dl-spec">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span data-i18n="dl_spec_support">دعم مستمر</span>
+        </div>
+      </div>
+      <div class="dl-btns">
+        <button class="btn-dl-main" onclick="openDlModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span data-i18n="dl_btn_main">تنزيل الآن — مجاناً</span>
+        </button>
+        <a href="https://wa.me/970595438486" class="btn-dl-alt" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          <span data-i18n="dl_btn_alt">احصل على الترخيص</span>
+        </a>
+      </div>
+    </div>
+    <div class="dl-card">
+      <span class="dl-card-ver">v5.0</span>
+      <span class="dl-card-name">ECU INTELLIGENCE PRO</span>
+      <div class="dl-card-stats">
+        <div class="dl-card-stat"><span class="dl-card-stat-k" data-i18n="dl_size">الحجم</span><span class="dl-card-stat-v">48.7 MB</span></div>
+        <div class="dl-card-stat"><span class="dl-card-stat-k" data-i18n="dl_os">نظام التشغيل</span><span class="dl-card-stat-v">Win 10/11</span></div>
+        <div class="dl-card-stat"><span class="dl-card-stat-k" data-i18n="dl_arch">المعمارية</span><span class="dl-card-stat-v">x64</span></div>
+        <div class="dl-card-stat"><span class="dl-card-stat-k" data-i18n="dl_release">الإصدار</span><span class="dl-card-stat-v">2026-06-01</span></div>
+        <div class="dl-card-stat"><span class="dl-card-stat-k" data-i18n="dl_lang_count">اللغات</span><span class="dl-card-stat-v">5 <span data-i18n="dl_lang_count_v">لغات</span></span></div>
+      </div>
+      <div class="dl-sha">SHA256: a4f2e8c1...b93d</div>
+    </div>
+  </div>
+</section>
+
 <!-- ══════════════════ PIPELINE ══════════════════ -->
 <section id="pipeline" class="pipeline-sec">
   <div class="sec-head fi">
     <span class="sec-eye">7-Stage Processing Pipeline</span>
-    <h2 class="sec-title">خط أنابيب <em>المعالجة المتكامل</em></h2>
-    <p class="sec-desc">كل ملف BIN يمر عبر 7 مراحل متتالية لضمان الدقة والسلامة القصوى قبل حفظ أي تعديل</p>
+    <h2 class="sec-title"><span data-i18n="pip_title_1">خط أنابيب</span> <em data-i18n="pip_title_2">المعالجة المتكامل</em></h2>
+    <p class="sec-desc" data-i18n="pip_desc">كل ملف BIN يمر عبر 7 مراحل متتالية لضمان الدقة والسلامة القصوى قبل حفظ أي تعديل</p>
     <div class="sec-div"></div>
   </div>
   <div class="pipeline-track">
-
     <div class="pip-step fi">
       <div class="pip-num">STAGE 01</div>
       <div class="pip-icon" style="background:rgba(249,115,22,.1)">
         <svg viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       </div>
       <div class="pip-name">SW ID Extraction</div>
-      <div class="pip-desc">استخراج معرّف البرنامج تلقائياً</div>
+      <div class="pip-desc" data-i18n="pip_s1">استخراج معرّف البرنامج تلقائياً</div>
     </div>
-
     <div class="pip-step fi">
       <div class="pip-num">STAGE 02</div>
       <div class="pip-icon" style="background:rgba(59,130,246,.1)">
         <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       </div>
       <div class="pip-name">Feature Detection</div>
-      <div class="pip-desc">كشف DPF/EGR/SCR/IMMO قبل التعديل</div>
+      <div class="pip-desc" data-i18n="pip_s2">كشف DPF/EGR/SCR/IMMO قبل التعديل</div>
     </div>
-
     <div class="pip-step fi">
       <div class="pip-num">STAGE 03</div>
       <div class="pip-icon" style="background:rgba(139,92,246,.1)">
         <svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round"><path d="M2 12h20M2 6h20M2 18h20"/><circle cx="6" cy="6" r="1" fill="#8b5cf6"/><circle cx="10" cy="12" r="1" fill="#8b5cf6"/><circle cx="16" cy="18" r="1" fill="#8b5cf6"/></svg>
       </div>
       <div class="pip-name">Pattern Matching</div>
-      <div class="pip-desc">مطابقة الأنماط مع دعم الأقنعة</div>
+      <div class="pip-desc" data-i18n="pip_s3">مطابقة الأنماط مع دعم الأقنعة</div>
     </div>
-
     <div class="pip-step fi">
       <div class="pip-num">STAGE 04</div>
       <div class="pip-icon" style="background:rgba(34,197,94,.1)">
         <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
       </div>
       <div class="pip-name">Context Validation</div>
-      <div class="pip-desc">التحقق من السياق لضمان السلامة</div>
+      <div class="pip-desc" data-i18n="pip_s4">التحقق من السياق لضمان السلامة</div>
     </div>
-
     <div class="pip-step fi">
       <div class="pip-num">STAGE 05</div>
       <div class="pip-icon" style="background:rgba(245,158,11,.1)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM12 8v8M8 12h8"/><circle cx="12" cy="12" r="3" fill="none"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
       </div>
       <div class="pip-name">Rule Engine</div>
-      <div class="pip-desc">تطبيق التصحيحات وفق حدود الأمان</div>
+      <div class="pip-desc" data-i18n="pip_s5">تطبيق التصحيحات وفق حدود الأمان</div>
     </div>
-
     <div class="pip-step fi">
       <div class="pip-num">STAGE 06</div>
       <div class="pip-icon" style="background:rgba(239,68,68,.1)">
         <svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
       </div>
       <div class="pip-name">Checksum Update</div>
-      <div class="pip-desc">تحديث المجموع التدقيقي تلقائياً</div>
+      <div class="pip-desc" data-i18n="pip_s6">تحديث المجموع التدقيقي تلقائياً</div>
     </div>
-
     <div class="pip-step fi">
       <div class="pip-num">STAGE 07</div>
       <div class="pip-icon" style="background:rgba(56,189,248,.1)">
         <svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
       </div>
       <div class="pip-name">Diff Learning</div>
-      <div class="pip-desc">تخزين الفروقات وتوليد سكريبتات</div>
+      <div class="pip-desc" data-i18n="pip_s7">تخزين الفروقات وتوليد سكريبتات</div>
     </div>
-
   </div>
 </section>
 
@@ -594,121 +852,83 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
 <section id="features">
   <div class="sec-head fi">
     <span class="sec-eye">Full Feature Set</span>
-    <h2 class="sec-title">مجموعة <em>الميزات الكاملة</em></h2>
-    <p class="sec-desc">أداة شاملة تغطي جميع احتياجات معايرة وحدات التحكم الإلكترونية للمحترفين</p>
+    <h2 class="sec-title"><span data-i18n="feat_title_1">مجموعة</span> <em data-i18n="feat_title_2">الميزات الكاملة</em></h2>
+    <p class="sec-desc" data-i18n="feat_desc">أداة شاملة تغطي جميع احتياجات معايرة وحدات التحكم الإلكترونية للمحترفين</p>
     <div class="sec-div"></div>
   </div>
-
   <div class="feat-grid">
-
     <div class="feat-card fi" style="--cg:rgba(249,115,22,.07)">
-      <div class="feat-icon" style="background:rgba(249,115,22,.1)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-      </div>
+      <div class="feat-icon" style="background:rgba(249,115,22,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
       <div class="feat-title">Auto-Tune Engine</div>
-      <div class="feat-desc">ضبط تلقائي متكامل بثلاث مراحل: Stage 1 (+10%)، Stage 2 (+20%)، Stage 3 (+30%) مع حدود سلامة ذكية ودعم جميع المتغيرات.</div>
+      <div class="feat-desc" data-i18n="f1_desc">ضبط تلقائي متكامل بثلاث مراحل: Stage 1 (+10%)، Stage 2 (+20%)، Stage 3 (+30%) مع حدود سلامة ذكية ودعم جميع المتغيرات.</div>
       <span class="feat-tag" style="background:rgba(249,115,22,.12);color:var(--accent)">STAGE 1/2/3</span>
     </div>
-
     <div class="feat-card fi" style="--cg:rgba(59,130,246,.07)">
-      <div class="feat-icon" style="background:rgba(59,130,246,.1)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
-      </div>
+      <div class="feat-icon" style="background:rgba(59,130,246,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg></div>
       <div class="feat-title">Fuel & Boost Maps</div>
-      <div class="feat-desc">عرض وتعديل خرائط الوقود والضغط التفصيلية بتمثيل بصري ملوّن. دعم uint8/uint16/float32 مع شبكة 16×16.</div>
+      <div class="feat-desc" data-i18n="f2_desc">عرض وتعديل خرائط الوقود والضغط التفصيلية بتمثيل بصري ملوّن. دعم uint8/uint16/float32 مع شبكة 16×16.</div>
       <span class="feat-tag" style="background:rgba(59,130,246,.12);color:var(--blue2)">16×16 GRID</span>
     </div>
-
     <div class="feat-card fi" style="--cg:rgba(239,68,68,.07)">
-      <div class="feat-icon" style="background:rgba(239,68,68,.1)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
-      </div>
+      <div class="feat-icon" style="background:rgba(239,68,68,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg></div>
       <div class="feat-title">DPF / EGR / IMMO Delete</div>
-      <div class="feat-desc">حذف فلتر الجسيمات وصمام إعادة الغازات وتعطيل الإيموبلايزر بضغطة واحدة مع نسخ احتياطي تلقائي.</div>
+      <div class="feat-desc" data-i18n="f3_desc">حذف فلتر الجسيمات وصمام إعادة الغازات وتعطيل الإيموبلايزر بضغطة واحدة مع نسخ احتياطي تلقائي.</div>
       <span class="feat-tag" style="background:rgba(239,68,68,.12);color:#fca5a5">ONE-CLICK</span>
     </div>
-
     <div class="feat-card fi" style="--cg:rgba(139,92,246,.07)">
-      <div class="feat-icon" style="background:rgba(139,92,246,.1)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
-      </div>
+      <div class="feat-icon" style="background:rgba(139,92,246,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
       <div class="feat-title">Script Engine</div>
-      <div class="feat-desc">محرك سكريبت JSON متقدم بمطابقة الأنماط والتحقق السياقي ودعم الأقنعة والتوليد التلقائي من قاعدة الفروقات.</div>
+      <div class="feat-desc" data-i18n="f4_desc">محرك سكريبت JSON متقدم بمطابقة الأنماط والتحقق السياقي ودعم الأقنعة والتوليد التلقائي من قاعدة الفروقات.</div>
       <span class="feat-tag" style="background:rgba(139,92,246,.12);color:#c4b5fd">JSON SCRIPTS</span>
     </div>
-
     <div class="feat-card fi" style="--cg:rgba(34,197,94,.07)">
-      <div class="feat-icon" style="background:rgba(34,197,94,.1)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round"><path d="M12 2c-4 0-8 4-8 8s4 8 8 8 8-4 8-8-4-8-8-8z"/><path d="M12 6v6l4 2"/></svg>
-      </div>
+      <div class="feat-icon" style="background:rgba(34,197,94,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round"><path d="M12 2c-4 0-8 4-8 8s4 8 8 8 8-4 8-8-4-8-8-8z"/><path d="M12 6v6l4 2"/></svg></div>
       <div class="feat-title">Pops & Bangs</div>
-      <div class="feat-desc">تفعيل صوت فرقعة العادم بثلاثة مستويات: Mild، Aggressive، Full Crackle مع ضبط دقيق لكل معامل.</div>
+      <div class="feat-desc" data-i18n="f5_desc">تفعيل صوت فرقعة العادم بثلاثة مستويات: Mild، Aggressive، Full Crackle مع ضبط دقيق لكل معامل.</div>
       <span class="feat-tag" style="background:rgba(34,197,94,.12);color:var(--green)">3 LEVELS</span>
     </div>
-
     <div class="feat-card fi" style="--cg:rgba(56,189,248,.07)">
-      <div class="feat-icon" style="background:rgba(56,189,248,.1)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-      </div>
+      <div class="feat-icon" style="background:rgba(56,189,248,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></div>
       <div class="feat-title">Diff Learning Engine</div>
-      <div class="feat-desc">تسجيل الفروقات المؤكدة وتوليد سكريبتات تلقائية. كلما استخدمت البرنامج أكثر أصبح أكثر ذكاءً.</div>
+      <div class="feat-desc" data-i18n="f6_desc">تسجيل الفروقات المؤكدة وتوليد سكريبتات تلقائية. كلما استخدمت البرنامج أكثر أصبح أكثر ذكاءً.</div>
       <span class="feat-tag" style="background:rgba(56,189,248,.12);color:#7dd3fc">AI-POWERED</span>
     </div>
-
     <div class="feat-card fi" style="--cg:rgba(245,158,11,.07)">
-      <div class="feat-icon" style="background:rgba(245,158,11,.1)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-      </div>
+      <div class="feat-icon" style="background:rgba(245,158,11,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
       <div class="feat-title">BIN Diff Viewer</div>
-      <div class="feat-desc">مقارنة ملفَي BIN بايت ببايت وعرض الفروقات مع إمكانية حفظها في قاعدة بيانات التعلم.</div>
+      <div class="feat-desc" data-i18n="f7_desc">مقارنة ملفَي BIN بايت ببايت وعرض الفروقات مع إمكانية حفظها في قاعدة بيانات التعلم.</div>
       <span class="feat-tag" style="background:rgba(245,158,11,.12);color:#fcd34d">BYTE-LEVEL</span>
     </div>
-
     <div class="feat-card fi" style="--cg:rgba(168,85,247,.07)">
-      <div class="feat-icon" style="background:rgba(168,85,247,.1)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-      </div>
+      <div class="feat-icon" style="background:rgba(168,85,247,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
       <div class="feat-title">OBD / CAN Decoder</div>
-      <div class="feat-desc">تحليل سجلات OBD-II من ELM327 وسجلات CAN candump مع فك تشفير PIDs وعرض رموز الأعطال.</div>
+      <div class="feat-desc" data-i18n="f8_desc">تحليل سجلات OBD-II من ELM327 وسجلات CAN candump مع فك تشفير PIDs وعرض رموز الأعطال.</div>
       <span class="feat-tag" style="background:rgba(168,85,247,.12);color:#d8b4fe">ELM327 READY</span>
     </div>
-
     <div class="feat-card fi" style="--cg:rgba(20,184,166,.07)">
-      <div class="feat-icon" style="background:rgba(20,184,166,.1)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#14b8a6" stroke-width="2" stroke-linecap="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>
-      </div>
+      <div class="feat-icon" style="background:rgba(20,184,166,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#14b8a6" stroke-width="2" stroke-linecap="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg></div>
       <div class="feat-title">Format Converter</div>
-      <div class="feat-desc">تحويل ثنائي كامل: BIN ↔ Intel HEX ↔ Motorola S-Record مع التحقق من المجموع التدقيقي.</div>
+      <div class="feat-desc" data-i18n="f9_desc">تحويل ثنائي كامل: BIN ↔ Intel HEX ↔ Motorola S-Record مع التحقق من المجموع التدقيقي.</div>
       <span class="feat-tag" style="background:rgba(20,184,166,.12);color:#5eead4">BIN/HEX/SREC</span>
     </div>
-
     <div class="feat-card fi" style="--cg:rgba(251,191,36,.07)">
-      <div class="feat-icon" style="background:rgba(251,191,36,.1)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-      </div>
+      <div class="feat-icon" style="background:rgba(251,191,36,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
       <div class="feat-title">CRM & Job Log</div>
-      <div class="feat-desc">إدارة العملاء وسجل الأعمال الكامل مع تصدير CSV والبحث وربط كل عمل بسيارة ومتغير ECU.</div>
+      <div class="feat-desc" data-i18n="f10_desc">إدارة العملاء وسجل الأعمال الكامل مع تصدير CSV والبحث وربط كل عمل بسيارة ومتغير ECU.</div>
       <span class="feat-tag" style="background:rgba(251,191,36,.12);color:#fde68a">BUSINESS TOOL</span>
     </div>
-
     <div class="feat-card fi" style="--cg:rgba(249,115,22,.05)">
-      <div class="feat-icon" style="background:rgba(249,115,22,.08)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      </div>
+      <div class="feat-icon" style="background:rgba(249,115,22,.08)"><svg viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
       <div class="feat-title">PDF / HTML Reports</div>
-      <div class="feat-desc">توليد تقارير احترافية HTML وPDF تحتوي نتائج التحليل وسجل التعديلات وبيانات العميل.</div>
+      <div class="feat-desc" data-i18n="f11_desc">توليد تقارير احترافية HTML وPDF تحتوي نتائج التحليل وسجل التعديلات وبيانات العميل.</div>
       <span class="feat-tag" style="background:rgba(249,115,22,.12);color:var(--accent)">PROFESSIONAL</span>
     </div>
-
     <div class="feat-card fi" style="--cg:rgba(59,130,246,.05)">
-      <div class="feat-icon" style="background:rgba(59,130,246,.08)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-      </div>
-      <div class="feat-title">6 Languages + RTL</div>
-      <div class="feat-desc">دعم كامل للعربية والإنجليزية والفرنسية والألمانية والتركية مع تصميم RTL وثيم داكن/فاتح.</div>
+      <div class="feat-icon" style="background:rgba(59,130,246,.08)"><svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+      <div class="feat-title">5 Languages + RTL</div>
+      <div class="feat-desc" data-i18n="f12_desc">دعم كامل للعربية والإنجليزية والفرنسية والألمانية والتركية مع تصميم RTL وثيم داكن/فاتح.</div>
       <span class="feat-tag" style="background:rgba(59,130,246,.12);color:var(--blue2)">AR/EN/FR/DE/TR</span>
     </div>
-
   </div>
 </section>
 
@@ -716,11 +936,10 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
 <section id="ecu-db" class="ecu-sec">
   <div class="sec-head fi">
     <span class="sec-eye">ECU Database</span>
-    <h2 class="sec-title">قاعدة بيانات <em>ECU الشاملة</em></h2>
-    <p class="sec-desc">تغطية كاملة لأبرز صانعي وحدات التحكم في السوق العالمي — ديزل وبنزين وناقل حركة</p>
+    <h2 class="sec-title"><span data-i18n="db_title_1">قاعدة بيانات</span> <em data-i18n="db_title_2">ECU الشاملة</em></h2>
+    <p class="sec-desc" data-i18n="db_desc">تغطية كاملة لأبرز صانعي وحدات التحكم في السوق العالمي — ديزل وبنزين وناقل حركة</p>
     <div class="sec-div"></div>
   </div>
-
   <div class="ecu-stats fi">
     <div class="ecu-stat"><span class="ecu-stat-n">32<span style="font-size:18px;color:var(--text3)">+</span></span><span class="ecu-stat-l">ECU Variants</span></div>
     <div class="ecu-stat"><span class="ecu-stat-n">8</span><span class="ecu-stat-l">Manufacturers</span></div>
@@ -728,12 +947,11 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
     <div class="ecu-stat"><span class="ecu-stat-n">12</span><span class="ecu-stat-l">Petrol ECUs</span></div>
     <div class="ecu-stat"><span class="ecu-stat-n">2</span><span class="ecu-stat-l">Gearbox TCUs</span></div>
   </div>
-
   <div class="ecu-table-wrap fi">
     <table class="ecu-table">
       <thead>
         <tr>
-          <th>المتغير</th><th>الصانع</th><th>الوصف</th><th>النوع</th><th>DPF</th><th>EGR</th>
+          <th data-i18n="tbl_variant">المتغير</th><th data-i18n="tbl_mfr">الصانع</th><th data-i18n="tbl_desc">الوصف</th><th data-i18n="tbl_type">النوع</th><th>DPF</th><th>EGR</th>
         </tr>
       </thead>
       <tbody>
@@ -748,7 +966,6 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
       </tbody>
     </table>
   </div>
-
   <div class="ecu-brands fi">
     <span class="ecu-brand">Bosch EDC17</span><span class="ecu-brand">Bosch MED17</span>
     <span class="ecu-brand">Bosch ME7.5</span><span class="ecu-brand">Bosch MG1CS001</span>
@@ -767,41 +984,19 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
 <section id="diff-learning">
   <div class="sec-head fi">
     <span class="sec-eye">Stage 7 — AI Diff Learning</span>
-    <h2 class="sec-title">محرك <em>التعلم التلقائي</em></h2>
-    <p class="sec-desc">كل عملية مؤكدة تُخزَّن تلقائياً — يمكن توليد سكريبت JSON جاهز منها باستخدام واحد</p>
+    <h2 class="sec-title"><span data-i18n="diff_title_1">محرك</span> <em data-i18n="diff_title_2">التعلم التلقائي</em></h2>
+    <p class="sec-desc" data-i18n="diff_desc">كل عملية مؤكدة تُخزَّن تلقائياً — يمكن توليد سكريبت JSON جاهز منها باستخدام واحد</p>
     <div class="sec-div"></div>
   </div>
-
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
     <div class="diff-card fi">
       <div class="diff-head">LEARNED DIFFS — LIVE DATABASE</div>
-      <div class="diff-row">
-        <span class="d-off">0xB400</span><span class="d-old">01 00 01</span>
-        <span class="d-arr">→</span><span class="d-new">00 00 00</span>
-        <span class="d-op">DPF_DELETE</span><span class="d-cnt">✔ ×14</span>
-      </div>
-      <div class="diff-row">
-        <span class="d-off">0xA200</span><span class="d-old">01 01 01</span>
-        <span class="d-arr">→</span><span class="d-new">00 00 00</span>
-        <span class="d-op">EGR_DELETE</span><span class="d-cnt">✔ ×9</span>
-      </div>
-      <div class="diff-row">
-        <span class="d-off">0x0200</span><span class="d-old">A5 A5 A5 A5</span>
-        <span class="d-arr">→</span><span class="d-new">00 00 00 00</span>
-        <span class="d-op">IMMO_OFF</span><span class="d-cnt">✔ ×7</span>
-      </div>
-      <div class="diff-row">
-        <span class="d-off">0x8000</span><span class="d-old">0C 40 …</span>
-        <span class="d-arr">→</span><span class="d-new">0D 46 …</span>
-        <span class="d-op">STAGE1_TUNE</span><span class="d-cnt" style="color:var(--blue2)">○ ×3</span>
-      </div>
-      <div class="diff-row">
-        <span class="d-off">0x9800</span><span class="d-old">F4 01</span>
-        <span class="d-arr">→</span><span class="d-new">FD 01</span>
-        <span class="d-op">STAGE2_TUNE</span><span class="d-cnt">✔ ×5</span>
-      </div>
+      <div class="diff-row"><span class="d-off">0xB400</span><span class="d-old">01 00 01</span><span class="d-arr">→</span><span class="d-new">00 00 00</span><span class="d-op">DPF_DELETE</span><span class="d-cnt">✔ ×14</span></div>
+      <div class="diff-row"><span class="d-off">0xA200</span><span class="d-old">01 01 01</span><span class="d-arr">→</span><span class="d-new">00 00 00</span><span class="d-op">EGR_DELETE</span><span class="d-cnt">✔ ×9</span></div>
+      <div class="diff-row"><span class="d-off">0x0200</span><span class="d-old">A5 A5 A5 A5</span><span class="d-arr">→</span><span class="d-new">00 00 00 00</span><span class="d-op">IMMO_OFF</span><span class="d-cnt">✔ ×7</span></div>
+      <div class="diff-row"><span class="d-off">0x8000</span><span class="d-old">0C 40 …</span><span class="d-arr">→</span><span class="d-new">0D 46 …</span><span class="d-op">STAGE1_TUNE</span><span class="d-cnt" style="color:var(--blue2)">○ ×3</span></div>
+      <div class="diff-row"><span class="d-off">0x9800</span><span class="d-old">F4 01</span><span class="d-arr">→</span><span class="d-new">FD 01</span><span class="d-op">STAGE2_TUNE</span><span class="d-cnt">✔ ×5</span></div>
     </div>
-
     <div class="fi" style="display:flex;flex-direction:column;gap:16px">
       <div style="background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:24px">
         <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);margin-bottom:14px;letter-spacing:.07em">AUTO-GENERATED SCRIPT EXAMPLE</div>
@@ -818,11 +1013,11 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
         <div style="background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:18px;text-align:center">
           <span style="font-family:'Orbitron',monospace;font-size:26px;font-weight:900;color:var(--accent);display:block">142</span>
-          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3)">TOTAL DIFFS</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3)" data-i18n="diff_total">TOTAL DIFFS</span>
         </div>
         <div style="background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:18px;text-align:center">
           <span style="font-family:'Orbitron',monospace;font-size:26px;font-weight:900;color:var(--green);display:block">23</span>
-          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3)">AUTO SCRIPTS</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3)" data-i18n="diff_scripts">AUTO SCRIPTS</span>
         </div>
       </div>
     </div>
@@ -835,66 +1030,44 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
 <section id="support">
   <div class="sec-head fi">
     <span class="sec-eye">Technical Support</span>
-    <h2 class="sec-title">الدعم الفني <em>المتخصص</em></h2>
-    <p class="sec-desc">خبير معايرة ECU متاح على مدار الساعة لمساعدتك في التثبيت والتشغيل والتراخيص</p>
+    <h2 class="sec-title"><span data-i18n="sup_title_1">الدعم الفني</span> <em data-i18n="sup_title_2">المتخصص</em></h2>
+    <p class="sec-desc" data-i18n="sup_desc">خبير معايرة ECU متاح على مدار الساعة لمساعدتك في التثبيت والتشغيل والتراخيص</p>
     <div class="sec-div"></div>
   </div>
-
   <div class="sup-grid">
     <div class="sup-card fi">
       <div class="sup-avatar">FM</div>
-      <div class="sup-name">فارس منصور</div>
+      <div class="sup-name" data-i18n="sup_name">الدعم الفني</div>
       <div class="sup-role">ECU CALIBRATION SPECIALIST</div>
       <span class="sup-phone" dir="ltr">+970 595 438 486</span>
-      <p style="font-size:13px;color:var(--text2);margin-bottom:22px;line-height:1.65">خبير متخصص في معايرة وحدات التحكم الإلكترونية للمركبات. متاح للدعم الفني والتدريب وتوفير التراخيص على مدار الساعة.</p>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:22px;line-height:1.65" data-i18n="sup_bio">خبير متخصص في معايرة وحدات التحكم الإلكترونية للمركبات. متاح للدعم الفني والتدريب وتوفير التراخيص على مدار الساعة.</p>
       <div class="sup-btns">
         <a href="https://wa.me/970595438486" class="btn-wa">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          تواصل عبر WhatsApp
+          <span data-i18n="sup_wa_btn">تواصل عبر WhatsApp</span>
         </a>
         <a href="tel:+970595438486" class="btn-secondary" style="padding:11px 18px">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-          اتصال مباشر
+          <span data-i18n="sup_call_btn">اتصال مباشر</span>
         </a>
       </div>
     </div>
-
     <div class="sup-feats fi">
       <div class="sup-feat">
-        <div class="sup-feat-icon" style="background:rgba(249,115,22,.1)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-        </div>
-        <div>
-          <div class="sup-feat-title">ترخيص مرتبط بالجهاز</div>
-          <div class="sup-feat-desc">مرتبط بـ HWID جهازك. تحقق محلي بدون إنترنت. لا يمكن نقله دون تواصل مع الدعم.</div>
-        </div>
+        <div class="sup-feat-icon" style="background:rgba(249,115,22,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+        <div><div class="sup-feat-title" data-i18n="sf1_title">ترخيص مرتبط بالجهاز</div><div class="sup-feat-desc" data-i18n="sf1_desc">مرتبط بـ HWID جهازك. تحقق محلي بدون إنترنت. لا يمكن نقله دون تواصل مع الدعم.</div></div>
       </div>
       <div class="sup-feat">
-        <div class="sup-feat-icon" style="background:rgba(59,130,246,.1)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        </div>
-        <div>
-          <div class="sup-feat-title">تحديثات مستمرة</div>
-          <div class="sup-feat-desc">إضافة متغيرات ECU جديدة وتحسينات الخوارزميات وميزات جديدة بشكل دوري لجميع المرخّصين.</div>
-        </div>
+        <div class="sup-feat-icon" style="background:rgba(59,130,246,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+        <div><div class="sup-feat-title" data-i18n="sf2_title">تحديثات مستمرة</div><div class="sup-feat-desc" data-i18n="sf2_desc">إضافة متغيرات ECU جديدة وتحسينات الخوارزميات وميزات جديدة بشكل دوري لجميع المرخّصين.</div></div>
       </div>
       <div class="sup-feat">
-        <div class="sup-feat-icon" style="background:rgba(34,197,94,.1)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <div>
-          <div class="sup-feat-title">نسخ احتياطي تلقائي</div>
-          <div class="sup-feat-desc">كل عملية تُنشئ نسخة احتياطية بطابع زمني قبل أي تعديل. بياناتك محمية دائماً.</div>
-        </div>
+        <div class="sup-feat-icon" style="background:rgba(34,197,94,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div><div class="sup-feat-title" data-i18n="sf3_title">نسخ احتياطي تلقائي</div><div class="sup-feat-desc" data-i18n="sf3_desc">كل عملية تُنشئ نسخة احتياطية بطابع زمني قبل أي تعديل. بياناتك محمية دائماً.</div></div>
       </div>
       <div class="sup-feat">
-        <div class="sup-feat-icon" style="background:rgba(139,92,246,.1)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <div>
-          <div class="sup-feat-title">دعم 24 / 7</div>
-          <div class="sup-feat-desc">الدعم الفني متاح على مدار الساعة عبر WhatsApp. رد سريع ومساعدة تقنية متخصصة.</div>
-        </div>
+        <div class="sup-feat-icon" style="background:rgba(139,92,246,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div><div class="sup-feat-title" data-i18n="sf4_title">دعم 24 / 7</div><div class="sup-feat-desc" data-i18n="sf4_desc">الدعم الفني متاح على مدار الساعة عبر WhatsApp. رد سريع ومساعدة تقنية متخصصة.</div></div>
       </div>
     </div>
   </div>
@@ -904,73 +1077,69 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
 <section id="license" class="lic-sec">
   <div class="sec-head fi">
     <span class="sec-eye">Licensing Plans</span>
-    <h2 class="sec-title">خطط <em>الترخيص</em></h2>
-    <p class="sec-desc">اختر الخطة المناسبة. جميع الخطط تشمل الترخيص المرتبط بالجهاز والتحقق المحلي</p>
+    <h2 class="sec-title"><span data-i18n="lic_title_1">خطط</span> <em data-i18n="lic_title_2">الترخيص</em></h2>
+    <p class="sec-desc" data-i18n="lic_desc">اختر الخطة المناسبة. جميع الخطط تشمل الترخيص المرتبط بالجهاز والتحقق المحلي</p>
     <div class="sec-div"></div>
   </div>
-
   <div class="lic-grid">
     <div class="lic-card fi">
       <div class="lic-plan">Basic</div>
-      <div class="lic-price">تواصل</div>
-      <div class="lic-period">سعر مخصص حسب الاحتياج</div>
+      <div class="lic-price" data-i18n="lic_contact">تواصل</div>
+      <div class="lic-period" data-i18n="lic_custom">سعر مخصص حسب الاحتياج</div>
       <ul class="lic-feats">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>تحليل ملفات BIN الأساسي</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>كشف المتغير التلقائي</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>خرائط الوقود والضغط</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="lb1">تحليل ملفات BIN الأساسي</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="lb2">كشف المتغير التلقائي</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="lb3">خرائط الوقود والضغط</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>DPF / EGR / IMMO Delete</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Pops & Bangs</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Pops &amp; Bangs</li>
         <li class="off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>Script Engine</li>
         <li class="off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>Diff Learning Engine</li>
-        <li class="off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>تقارير PDF / HTML</li>
+        <li class="off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg><span data-i18n="lb8">تقارير PDF / HTML</span></li>
       </ul>
-      <a href="https://wa.me/970595438486" class="btn-secondary" style="width:100%;justify-content:center">تواصل للسعر</a>
+      <a href="https://wa.me/970595438486" class="btn-secondary" style="width:100%;justify-content:center" data-i18n="lic_contact_btn">تواصل للسعر</a>
     </div>
-
     <div class="lic-card feat fi">
-      <div class="lic-badge">الأكثر طلباً</div>
+      <div class="lic-badge" data-i18n="lic_popular">الأكثر طلباً</div>
       <div class="lic-plan" style="margin-top:22px">Professional</div>
-      <div class="lic-price">تواصل</div>
-      <div class="lic-period">سعر مخصص حسب الاحتياج</div>
+      <div class="lic-price" data-i18n="lic_contact">تواصل</div>
+      <div class="lic-period" data-i18n="lic_custom">سعر مخصص حسب الاحتياج</div>
       <ul class="lic-feats">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>كل ميزات Basic</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Script Engine كامل</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="lp1">كل ميزات Basic</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Script Engine</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Diff Learning Engine</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>BIN Diff Viewer</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>OBD / CAN Decoder</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>تقارير PDF / HTML</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="lb8">تقارير PDF / HTML</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>CRM + Job Log</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>تحديثات أولوية</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="lp8">تحديثات أولوية</span></li>
       </ul>
       <a href="https://wa.me/970595438486" class="btn-primary" style="width:100%;justify-content:center;text-decoration:none">
         <svg viewBox="0 0 24 24" fill="currentColor" style="width:15px;height:15px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        احصل على الترخيص
+        <span data-i18n="nav_cta">احصل على الترخيص</span>
       </a>
     </div>
-
     <div class="lic-card fi">
       <div class="lic-plan">Enterprise</div>
-      <div class="lic-price">تواصل</div>
-      <div class="lic-period">للشركات والمراكز الكبيرة</div>
+      <div class="lic-price" data-i18n="lic_contact">تواصل</div>
+      <div class="lic-period" data-i18n="lic_ent_period">للشركات والمراكز الكبيرة</div>
       <ul class="lic-feats">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>كل ميزات Professional</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>ترخيص متعدد الأجهزة</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>قاعدة بيانات مخصصة</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>تدريب وتوثيق متخصص</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>أولوية قصوى في الدعم</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>إضافة ECU مخصصة</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>تحديثات فورية</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>عقد صيانة سنوي</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="le1">كل ميزات Professional</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="le2">ترخيص متعدد الأجهزة</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="le3">قاعدة بيانات مخصصة</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="le4">تدريب وتوثيق متخصص</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="le5">أولوية قصوى في الدعم</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="le6">إضافة ECU مخصصة</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="le7">تحديثات فورية</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="le8">عقد صيانة سنوي</span></li>
       </ul>
-      <a href="https://wa.me/970595438486" class="btn-secondary" style="width:100%;justify-content:center">تواصل معنا</a>
+      <a href="https://wa.me/970595438486" class="btn-secondary" style="width:100%;justify-content:center" data-i18n="lic_ent_btn">تواصل معنا</a>
     </div>
   </div>
-
   <div class="lic-note fi">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
     <div>
-      <div class="lic-note-title">الترخيص مرتبط بـ Machine ID (HWID)</div>
-      <div class="lic-note-desc">عند التفعيل يُربَط الترخيص ببصمة جهازك الفريدة. التحقق محلي بدون إنترنت. لنقله لجهاز جديد تواصل مع الدعم مع إرسال HWID الجهاز الجديد.</div>
+      <div class="lic-note-title" data-i18n="lic_note_title">الترخيص مرتبط بـ Machine ID (HWID)</div>
+      <div class="lic-note-desc" data-i18n="lic_note_desc">عند التفعيل يُربَط الترخيص ببصمة جهازك الفريدة. التحقق محلي بدون إنترنت. لنقله لجهاز جديد تواصل مع الدعم مع إرسال HWID الجهاز الجديد.</div>
     </div>
   </div>
 </section>
@@ -980,30 +1149,26 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
   <div class="foot-top">
     <div>
       <a href="#" class="nav-logo" style="margin-bottom:12px;display:inline-flex">
-        <div class="nav-logo-icon">
-          <h2 style="color: white;">⚙</h2>
-        </div>
+        <div class="nav-logo-icon"><h2 style="color: white;">⚙</h2></div>
         <div style="margin-right:10px">
           <div class="nav-logo-text">ECU<span>INTEL</span> PRO</div>
           <div class="nav-logo-sub">v5.0 · 7-STAGE PIPELINE</div>
         </div>
       </a>
-      <p>منظومة احترافية متكاملة لتحليل ومعايرة وحدات التحكم الإلكترونية. مصممة لمحترفي صناعة السيارات والتونينج.</p>
+      <p data-i18n="foot_desc">منظومة احترافية متكاملة لتحليل ومعايرة وحدات التحكم الإلكترونية. مصممة لمحترفي صناعة السيارات والتونينج.</p>
       <div class="foot-brand-meta">v5.0.0 — © 2026 Fares Mansour</div>
     </div>
-
     <div>
-      <div class="foot-col-title">الميزات</div>
+      <div class="foot-col-title" data-i18n="foot_features">الميزات</div>
       <ul class="foot-links">
         <li><a href="#features">Auto-Tune Engine</a></li>
-        <li><a href="#features">Fuel & Boost Maps</a></li>
+        <li><a href="#features">Fuel &amp; Boost Maps</a></li>
         <li><a href="#features">DPF / EGR Delete</a></li>
         <li><a href="#features">Script Engine</a></li>
-        <li><a href="#features">Pops & Bangs</a></li>
+        <li><a href="#features">Pops &amp; Bangs</a></li>
         <li><a href="#diff-learning">Diff Learning</a></li>
       </ul>
     </div>
-
     <div>
       <div class="foot-col-title">ECU Database</div>
       <ul class="foot-links">
@@ -1015,24 +1180,22 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
         <li><a href="#ecu-db">Marelli IAW/MJD</a></li>
       </ul>
     </div>
-
     <div>
-      <div class="foot-col-title">التواصل</div>
+      <div class="foot-col-title" data-i18n="foot_contact">التواصل</div>
       <ul class="foot-links">
         <li><a href="https://wa.me/970595438486">WhatsApp: +970 595 438 486</a></li>
-        <li><a href="tel:+970595438486">اتصال مباشر</a></li>
-        <li><a href="#support">الدعم الفني</a></li>
-        <li><a href="#license">خطط الترخيص</a></li>
+        <li><a href="tel:+970595438486" data-i18n="sup_call_btn">اتصال مباشر</a></li>
+        <li><a href="#support" data-i18n="nav_support">الدعم الفني</a></li>
+        <li><a href="#license" data-i18n="nav_license">التراخيص</a></li>
       </ul>
       <div style="margin-top:18px">
         <a href="https://wa.me/970595438486" class="btn-wa" style="font-size:13px;padding:10px 16px">
           <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          تواصل الآن
+          <span data-i18n="foot_wa">تواصل الآن</span>
         </a>
       </div>
     </div>
   </div>
-
   <div class="foot-bottom">
     <div class="foot-copy">© 2026 ECU Intelligence Pro v5 — by Fares Mansour · +970 595 438 486 · All rights reserved.</div>
     <div class="foot-mfrs">Bosch · Continental · Delphi · Siemens · Marelli · Denso · Hitachi · ZF</div>
@@ -1040,47 +1203,522 @@ footer{padding:56px 5% 36px;background:var(--bg);border-top:1px solid var(--bord
 </footer>
 
 <script>
-// Hamburger
-const ham=document.getElementById('ham'),mob=document.getElementById('mobMenu');
-ham.addEventListener('click',()=>{ham.classList.toggle('open');mob.classList.toggle('open')});
-function closeMob(){ham.classList.remove('open');mob.classList.remove('open')}
-document.addEventListener('click',e=>{if(!nav.contains(e.target)&&!mob.contains(e.target))closeMob()});
+// ══════════════════════════════════════════════
+// TRANSLATIONS
+// ══════════════════════════════════════════════
+const T = {
+  ar: {
+    nav_pipeline:'خط الأنابيب', nav_features:'الميزات', nav_db:'قاعدة البيانات',
+    nav_download:'تنزيل', nav_support:'الدعم', nav_license:'التراخيص',
+    nav_cta:'احصل على الترخيص',
+    hero_badge:'الإصدار 5.0 — 7 مراحل متكاملة',
+    hero_sub:'منظومة معايرة وحدات التحكم الاحترافية',
+    hero_desc:'أداة متكاملة من 7 مراحل لتحليل ملفات BIN ومعايرة وحدات التحكم الإلكترونية. تدعم أكثر من 32 متغيراً من Bosch، Delphi، Siemens، Marelli، Continental، Denso وغيرها مع محرك تعلم الفروقات التلقائي.',
+    hero_dl_btn:'تنزيل البرنامج', hero_explore:'استكشف الميزات',
+    stat_lang:'Languages',
+    mock_analysis:'التحليل',
+    dl_badge:'تنزيل مجاني — الترخيص مطلوب',
+    dl_title_1:'تنزيل',
+    dl_desc:'حمّل البرنامج مجاناً وابدأ التجربة. يتطلب ترخيصاً نشطاً مرتبطاً بجهازك للتشغيل. تواصل معنا عبر WhatsApp للحصول على الترخيص.',
+    dl_spec_size:'48.7 MB · .exe Installer', dl_spec_ver:'v5.0.0 · 2026-06-01',
+    dl_spec_support:'دعم مستمر',
+    dl_btn_main:'تنزيل الآن — مجاناً', dl_btn_alt:'احصل على الترخيص',
+    dl_size:'الحجم', dl_os:'نظام التشغيل', dl_arch:'المعمارية',
+    dl_release:'الإصدار', dl_lang_count:'اللغات', dl_lang_count_v:'لغات',
+    dl_modal_ver:'v5.0.0 — Windows x64',
+    dl_license_req:'الترخيص', dl_license_req_v:'مطلوب (HWID)',
+    dl_modal_cta:'تنزيل البرنامج',
+    dl_modal_note:'تواصل عبر WhatsApp للحصول على رابط التنزيل والترخيص · +970 595 438 486',
+    pip_title_1:'خط أنابيب', pip_title_2:'المعالجة المتكامل',
+    pip_desc:'كل ملف BIN يمر عبر 7 مراحل متتالية لضمان الدقة والسلامة القصوى قبل حفظ أي تعديل',
+    pip_s1:'استخراج معرّف البرنامج تلقائياً', pip_s2:'كشف DPF/EGR/SCR/IMMO قبل التعديل',
+    pip_s3:'مطابقة الأنماط مع دعم الأقنعة', pip_s4:'التحقق من السياق لضمان السلامة',
+    pip_s5:'تطبيق التصحيحات وفق حدود الأمان', pip_s6:'تحديث المجموع التدقيقي تلقائياً',
+    pip_s7:'تخزين الفروقات وتوليد سكريبتات',
+    feat_title_1:'مجموعة', feat_title_2:'الميزات الكاملة',
+    feat_desc:'أداة شاملة تغطي جميع احتياجات معايرة وحدات التحكم الإلكترونية للمحترفين',
+    f1_desc:'ضبط تلقائي متكامل بثلاث مراحل: Stage 1 (+10%)، Stage 2 (+20%)، Stage 3 (+30%) مع حدود سلامة ذكية.',
+    f2_desc:'عرض وتعديل خرائط الوقود والضغط التفصيلية بتمثيل بصري ملوّن. دعم uint8/uint16/float32 مع شبكة 16×16.',
+    f3_desc:'حذف فلتر الجسيمات وصمام إعادة الغازات وتعطيل الإيموبلايزر بضغطة واحدة مع نسخ احتياطي تلقائي.',
+    f4_desc:'محرك سكريبت JSON متقدم بمطابقة الأنماط والتحقق السياقي ودعم الأقنعة والتوليد التلقائي.',
+    f5_desc:'تفعيل صوت فرقعة العادم بثلاثة مستويات: Mild، Aggressive، Full Crackle مع ضبط دقيق.',
+    f6_desc:'تسجيل الفروقات المؤكدة وتوليد سكريبتات تلقائية. كلما استخدمت البرنامج أكثر أصبح أكثر ذكاءً.',
+    f7_desc:'مقارنة ملفَي BIN بايت ببايت وعرض الفروقات مع إمكانية حفظها في قاعدة بيانات التعلم.',
+    f8_desc:'تحليل سجلات OBD-II من ELM327 وسجلات CAN مع فك تشفير PIDs وعرض رموز الأعطال.',
+    f9_desc:'تحويل ثنائي كامل: BIN ↔ Intel HEX ↔ Motorola S-Record مع التحقق من المجموع التدقيقي.',
+    f10_desc:'إدارة العملاء وسجل الأعمال الكامل مع تصدير CSV والبحث وربط كل عمل بسيارة ومتغير ECU.',
+    f11_desc:'توليد تقارير احترافية HTML وPDF تحتوي نتائج التحليل وسجل التعديلات وبيانات العميل.',
+    f12_desc:'دعم كامل للعربية والإنجليزية والفرنسية والألمانية والتركية مع تصميم RTL وثيم داكن/فاتح.',
+    db_title_1:'قاعدة بيانات', db_title_2:'ECU الشاملة',
+    db_desc:'تغطية كاملة لأبرز صانعي وحدات التحكم في السوق العالمي — ديزل وبنزين وناقل حركة',
+    tbl_variant:'المتغير', tbl_mfr:'الصانع', tbl_desc:'الوصف', tbl_type:'النوع',
+    diff_title_1:'محرك', diff_title_2:'التعلم التلقائي',
+    diff_desc:'كل عملية مؤكدة تُخزَّن تلقائياً — يمكن توليد سكريبت JSON جاهز منها باستخدام واحد',
+    diff_total:'إجمالي الفروقات', diff_scripts:'سكريبتات تلقائية',
+    sup_title_1:'الدعم الفني', sup_title_2:'المتخصص',
+    sup_desc:'خبير معايرة ECU متاح على مدار الساعة لمساعدتك في التثبيت والتشغيل والتراخيص',
+    sup_name:'الدعم الفني',
+    sup_bio:'خبير متخصص في معايرة وحدات التحكم الإلكترونية للمركبات. متاح للدعم الفني والتدريب وتوفير التراخيص على مدار الساعة.',
+    sup_wa_btn:'تواصل عبر WhatsApp', sup_call_btn:'اتصال مباشر',
+    sf1_title:'ترخيص مرتبط بالجهاز', sf1_desc:'مرتبط بـ HWID جهازك. تحقق محلي بدون إنترنت. لا يمكن نقله دون تواصل مع الدعم.',
+    sf2_title:'تحديثات مستمرة', sf2_desc:'إضافة متغيرات ECU جديدة وتحسينات الخوارزميات وميزات جديدة بشكل دوري.',
+    sf3_title:'نسخ احتياطي تلقائي', sf3_desc:'كل عملية تُنشئ نسخة احتياطية بطابع زمني قبل أي تعديل. بياناتك محمية دائماً.',
+    sf4_title:'دعم 24/7', sf4_desc:'الدعم الفني متاح على مدار الساعة عبر WhatsApp. رد سريع ومساعدة تقنية متخصصة.',
+    lic_title_1:'خطط', lic_title_2:'الترخيص',
+    lic_desc:'اختر الخطة المناسبة. جميع الخطط تشمل الترخيص المرتبط بالجهاز والتحقق المحلي',
+    lic_contact:'تواصل', lic_custom:'سعر مخصص حسب الاحتياج',
+    lic_popular:'الأكثر طلباً', lic_contact_btn:'تواصل للسعر',
+    lic_ent_period:'للشركات والمراكز الكبيرة', lic_ent_btn:'تواصل معنا',
+    lb1:'تحليل ملفات BIN الأساسي', lb2:'كشف المتغير التلقائي', lb3:'خرائط الوقود والضغط',
+    lb8:'تقارير PDF / HTML',
+    lp1:'كل ميزات Basic', lp8:'تحديثات أولوية',
+    le1:'كل ميزات Professional', le2:'ترخيص متعدد الأجهزة',
+    le3:'قاعدة بيانات مخصصة', le4:'تدريب وتوثيق متخصص',
+    le5:'أولوية قصوى في الدعم', le6:'إضافة ECU مخصصة',
+    le7:'تحديثات فورية', le8:'عقد صيانة سنوي',
+    lic_note_title:'الترخيص مرتبط بـ Machine ID (HWID)',
+    lic_note_desc:'عند التفعيل يُربَط الترخيص ببصمة جهازك الفريدة. التحقق محلي بدون إنترنت. لنقله لجهاز جديد تواصل مع الدعم.',
+    foot_desc:'منظومة احترافية متكاملة لتحليل ومعايرة وحدات التحكم الإلكترونية. مصممة لمحترفي صناعة السيارات والتونينج.',
+    foot_features:'الميزات', foot_contact:'التواصل', foot_wa:'تواصل الآن',
+  },
+  en: {
+    nav_pipeline:'Pipeline', nav_features:'Features', nav_db:'ECU Database',
+    nav_download:'Download', nav_support:'Support', nav_license:'Licensing',
+    nav_cta:'Get License',
+    hero_badge:'Version 5.0 — 7 Integrated Stages',
+    hero_sub:'Professional ECU Calibration Suite',
+    hero_desc:'A complete 7-stage tool for BIN file analysis and ECU calibration. Supports 32+ variants from Bosch, Delphi, Siemens, Marelli, Continental, Denso and more with automatic diff-learning engine.',
+    hero_dl_btn:'Download Software', hero_explore:'Explore Features',
+    stat_lang:'Languages',
+    mock_analysis:'Analysis',
+    dl_badge:'Free Download — License Required',
+    dl_title_1:'Download',
+    dl_desc:'Download the software for free and start. Requires an active license tied to your device. Contact us via WhatsApp to get your license.',
+    dl_spec_size:'48.7 MB · .exe Installer', dl_spec_ver:'v5.0.0 · 2026-06-01',
+    dl_spec_support:'Continuous Support',
+    dl_btn_main:'Download Now — Free', dl_btn_alt:'Get License',
+    dl_size:'Size', dl_os:'Operating System', dl_arch:'Architecture',
+    dl_release:'Release Date', dl_lang_count:'Languages', dl_lang_count_v:'langs',
+    dl_modal_ver:'v5.0.0 — Windows x64',
+    dl_license_req:'License', dl_license_req_v:'Required (HWID)',
+    dl_modal_cta:'Download Software',
+    dl_modal_note:'Contact via WhatsApp for download link and license · +970 595 438 486',
+    pip_title_1:'Integrated', pip_title_2:'Processing Pipeline',
+    pip_desc:'Every BIN file passes through 7 sequential stages to ensure maximum accuracy and safety before saving any modification',
+    pip_s1:'Automatic software ID extraction', pip_s2:'Detect DPF/EGR/SCR/IMMO before editing',
+    pip_s3:'Pattern matching with mask support', pip_s4:'Context validation for safety',
+    pip_s5:'Apply patches within safety limits', pip_s6:'Automatic checksum update',
+    pip_s7:'Store diffs and generate scripts',
+    feat_title_1:'Complete', feat_title_2:'Feature Set',
+    feat_desc:'A comprehensive tool covering all professional ECU calibration needs',
+    f1_desc:'Full auto-tune in three stages: Stage 1 (+10%), Stage 2 (+20%), Stage 3 (+30%) with smart safety limits and support for all variants.',
+    f2_desc:'View and edit detailed fuel and boost maps with color visualization. Supports uint8/uint16/float32 with 16×16 grid.',
+    f3_desc:'Delete DPF, EGR, and disable immobilizer with one click, with automatic backup before each operation.',
+    f4_desc:'Advanced JSON script engine with pattern matching, context validation, mask support, and automatic generation from diff database.',
+    f5_desc:'Enable exhaust pop and bang sound in three levels: Mild, Aggressive, Full Crackle with fine-tuning for each parameter.',
+    f6_desc:'Record confirmed diffs and generate automatic scripts. The more you use it, the smarter it becomes.',
+    f7_desc:'Compare two BIN files byte by byte and view differences with the option to save them to the learning database.',
+    f8_desc:'Analyze OBD-II logs from ELM327 and CAN candump logs with PID decoding and fault code display.',
+    f9_desc:'Full binary conversion: BIN ↔ Intel HEX ↔ Motorola S-Record with checksum verification.',
+    f10_desc:'Customer management and complete job log with CSV export, search, and linking each job to a vehicle and ECU variant.',
+    f11_desc:'Generate professional HTML and PDF reports containing analysis results, modification log, and customer data.',
+    f12_desc:'Full support for Arabic, English, French, German, and Turkish with RTL design and dark/light theme.',
+    db_title_1:'Comprehensive', db_title_2:'ECU Database',
+    db_desc:'Full coverage of top ECU manufacturers in the global market — diesel, petrol, and gearbox',
+    tbl_variant:'Variant', tbl_mfr:'Manufacturer', tbl_desc:'Description', tbl_type:'Type',
+    diff_title_1:'Automatic', diff_title_2:'Learning Engine',
+    diff_desc:'Every confirmed operation is stored automatically — generate a ready JSON script from it in one click',
+    diff_total:'TOTAL DIFFS', diff_scripts:'AUTO SCRIPTS',
+    sup_title_1:'Technical', sup_title_2:'Support',
+    sup_desc:'ECU calibration expert available 24/7 to help with installation, operation, and licensing',
+    sup_name:'Fares Mansour',
+    sup_bio:'Specialist in electronic control unit calibration for vehicles. Available for technical support, training, and licensing around the clock.',
+    sup_wa_btn:'Contact via WhatsApp', sup_call_btn:'Direct Call',
+    sf1_title:'Device-Bound License', sf1_desc:'Bound to your device HWID. Local verification without internet. Cannot transfer without contacting support.',
+    sf2_title:'Continuous Updates', sf2_desc:'Adding new ECU variants, algorithm improvements, and new features periodically for all licensees.',
+    sf3_title:'Automatic Backup', sf3_desc:'Every operation creates a timestamped backup before any modification. Your data is always protected.',
+    sf4_title:'24/7 Support', sf4_desc:'Technical support available around the clock via WhatsApp. Fast response and specialized assistance.',
+    lic_title_1:'Licensing', lic_title_2:'Plans',
+    lic_desc:'Choose the right plan. All plans include device-bound licensing and local verification',
+    lic_contact:'Contact', lic_custom:'Custom pricing on request',
+    lic_popular:'Most Popular', lic_contact_btn:'Contact for Price',
+    lic_ent_period:'For companies and large centers', lic_ent_btn:'Contact Us',
+    lb1:'Basic BIN file analysis', lb2:'Automatic variant detection', lb3:'Fuel & Boost maps',
+    lb8:'PDF / HTML Reports',
+    lp1:'All Basic features', lp8:'Priority updates',
+    le1:'All Professional features', le2:'Multi-device license',
+    le3:'Custom database', le4:'Specialized training & documentation',
+    le5:'Top priority support', le6:'Custom ECU addition',
+    le7:'Instant updates', le8:'Annual maintenance contract',
+    lic_note_title:'License bound to Machine ID (HWID)',
+    lic_note_desc:'Upon activation, the license is tied to your device\'s unique fingerprint. Local verification without internet. To transfer to a new device, contact support with the new HWID.',
+    foot_desc:'A professional integrated suite for ECU analysis and calibration. Designed for automotive and tuning professionals.',
+    foot_features:'Features', foot_contact:'Contact', foot_wa:'Contact Now',
+  },
+  fr: {
+    nav_pipeline:'Pipeline', nav_features:'Fonctionnalités', nav_db:'Base ECU',
+    nav_download:'Télécharger', nav_support:'Support', nav_license:'Licences',
+    nav_cta:'Obtenir Licence',
+    hero_badge:'Version 5.0 — 7 Étapes Intégrées',
+    hero_sub:'Suite Professionnelle de Calibration ECU',
+    hero_desc:'Un outil complet en 7 étapes pour l\'analyse de fichiers BIN et la calibration ECU. Supporte plus de 32 variantes de Bosch, Delphi, Siemens, Marelli, Continental, Denso avec moteur d\'apprentissage automatique.',
+    hero_dl_btn:'Télécharger le Logiciel', hero_explore:'Explorer les Fonctionnalités',
+    stat_lang:'Langues',
+    mock_analysis:'Analyse',
+    dl_badge:'Téléchargement Gratuit — Licence Requise',
+    dl_title_1:'Télécharger',
+    dl_desc:'Téléchargez le logiciel gratuitement. Nécessite une licence active liée à votre appareil. Contactez-nous via WhatsApp pour obtenir votre licence.',
+    dl_spec_size:'48.7 MB · Installeur .exe', dl_spec_ver:'v5.0.0 · 2026-06-01',
+    dl_spec_support:'Support Continu',
+    dl_btn_main:'Télécharger Maintenant — Gratuit', dl_btn_alt:'Obtenir Licence',
+    dl_size:'Taille', dl_os:'Système d\'exploitation', dl_arch:'Architecture',
+    dl_release:'Date de sortie', dl_lang_count:'Langues', dl_lang_count_v:'langues',
+    dl_modal_ver:'v5.0.0 — Windows x64',
+    dl_license_req:'Licence', dl_license_req_v:'Requise (HWID)',
+    dl_modal_cta:'Télécharger le Logiciel',
+    dl_modal_note:'Contactez via WhatsApp pour le lien et la licence · +970 595 438 486',
+    pip_title_1:'Pipeline de', pip_title_2:'Traitement Intégré',
+    pip_desc:'Chaque fichier BIN passe par 7 étapes séquentielles pour garantir précision et sécurité maximales',
+    pip_s1:'Extraction automatique de l\'ID logiciel', pip_s2:'Détection DPF/EGR/SCR/IMMO',
+    pip_s3:'Correspondance de motifs avec masques', pip_s4:'Validation contextuelle',
+    pip_s5:'Application des correctifs dans les limites de sécurité', pip_s6:'Mise à jour automatique du checksum',
+    pip_s7:'Stockage des diffs et génération de scripts',
+    feat_title_1:'Ensemble', feat_title_2:'Complet des Fonctionnalités',
+    feat_desc:'Un outil complet couvrant tous les besoins de calibration ECU professionnelle',
+    f1_desc:'Réglage automatique en trois étapes: Stage 1 (+10%), Stage 2 (+20%), Stage 3 (+30%) avec limites de sécurité intelligentes.',
+    f2_desc:'Affichage et modification des cartes de carburant et de pression avec visualisation colorée. Supporte uint8/uint16/float32 avec grille 16×16.',
+    f3_desc:'Suppression DPF, EGR et désactivation immobiliseur en un clic avec sauvegarde automatique.',
+    f4_desc:'Moteur de scripts JSON avancé avec correspondance de motifs, validation contextuelle et génération automatique.',
+    f5_desc:'Activation des pops & bangs en trois niveaux: Mild, Aggressive, Full Crackle avec réglage fin.',
+    f6_desc:'Enregistrement des diffs confirmés et génération de scripts automatiques. Plus vous l\'utilisez, plus il devient intelligent.',
+    f7_desc:'Comparaison de deux fichiers BIN octet par octet avec affichage des différences.',
+    f8_desc:'Analyse des journaux OBD-II d\'ELM327 avec décodage PID et affichage des codes de défaut.',
+    f9_desc:'Conversion binaire complète: BIN ↔ Intel HEX ↔ Motorola S-Record avec vérification du checksum.',
+    f10_desc:'Gestion des clients et journal de travail complet avec export CSV et recherche.',
+    f11_desc:'Génération de rapports professionnels HTML et PDF avec résultats d\'analyse et données client.',
+    f12_desc:'Support complet pour l\'arabe, l\'anglais, le français, l\'allemand et le turc avec design RTL.',
+    db_title_1:'Base de Données', db_title_2:'ECU Complète',
+    db_desc:'Couverture complète des principaux fabricants ECU du marché mondial — diesel, essence et boîte de vitesse',
+    tbl_variant:'Variante', tbl_mfr:'Fabricant', tbl_desc:'Description', tbl_type:'Type',
+    diff_title_1:'Moteur', diff_title_2:'d\'Apprentissage Automatique',
+    diff_desc:'Chaque opération confirmée est stockée automatiquement — générez un script JSON prêt en un clic',
+    diff_total:'DIFFS TOTAL', diff_scripts:'SCRIPTS AUTO',
+    sup_title_1:'Support', sup_title_2:'Technique',
+    sup_desc:'Expert en calibration ECU disponible 24h/24 pour vous aider à l\'installation, au fonctionnement et aux licences',
+    sup_name:'Fares Mansour',
+    sup_bio:'Spécialiste en calibration des unités de contrôle électroniques. Disponible pour le support technique, la formation et les licences.',
+    sup_wa_btn:'Contacter via WhatsApp', sup_call_btn:'Appel Direct',
+    sf1_title:'Licence liée à l\'appareil', sf1_desc:'Liée au HWID de votre appareil. Vérification locale sans internet.',
+    sf2_title:'Mises à Jour Continues', sf2_desc:'Ajout de nouvelles variantes ECU et améliorations périodiques pour tous les licenciés.',
+    sf3_title:'Sauvegarde Automatique', sf3_desc:'Chaque opération crée une sauvegarde horodatée avant modification.',
+    sf4_title:'Support 24/7', sf4_desc:'Support technique disponible 24h/24 via WhatsApp. Réponse rapide.',
+    lic_title_1:'Plans de', lic_title_2:'Licence',
+    lic_desc:'Choisissez le bon plan. Tous les plans incluent une licence liée à l\'appareil et une vérification locale',
+    lic_contact:'Contact', lic_custom:'Prix personnalisé sur demande',
+    lic_popular:'Le Plus Demandé', lic_contact_btn:'Contacter pour Prix',
+    lic_ent_period:'Pour entreprises et grands centres', lic_ent_btn:'Nous Contacter',
+    lb1:'Analyse de base des fichiers BIN', lb2:'Détection automatique de variante', lb3:'Cartes Carburant & Pression',
+    lb8:'Rapports PDF / HTML',
+    lp1:'Toutes fonctionnalités Basic', lp8:'Mises à jour prioritaires',
+    le1:'Toutes fonctionnalités Professional', le2:'Licence multi-appareils',
+    le3:'Base de données personnalisée', le4:'Formation & documentation spécialisées',
+    le5:'Support priorité maximale', le6:'Ajout ECU personnalisé',
+    le7:'Mises à jour instantanées', le8:'Contrat de maintenance annuel',
+    lic_note_title:'Licence liée au Machine ID (HWID)',
+    lic_note_desc:'Lors de l\'activation, la licence est liée à l\'empreinte unique de votre appareil. Vérification locale sans internet.',
+    foot_desc:'Suite professionnelle intégrée pour l\'analyse et la calibration ECU. Conçue pour les professionnels.',
+    foot_features:'Fonctionnalités', foot_contact:'Contact', foot_wa:'Contacter',
+  },
+  de: {
+    nav_pipeline:'Pipeline', nav_features:'Funktionen', nav_db:'ECU-Datenbank',
+    nav_download:'Herunterladen', nav_support:'Support', nav_license:'Lizenzen',
+    nav_cta:'Lizenz erhalten',
+    hero_badge:'Version 5.0 — 7 Integrierte Stufen',
+    hero_sub:'Professionelles ECU-Kalibrierungs-Suite',
+    hero_desc:'Ein vollständiges 7-Stufen-Tool für BIN-Dateianalyse und ECU-Kalibrierung. Unterstützt 32+ Varianten von Bosch, Delphi, Siemens, Marelli, Continental, Denso und mehr mit automatischem Diff-Lernmotor.',
+    hero_dl_btn:'Software herunterladen', hero_explore:'Funktionen erkunden',
+    stat_lang:'Sprachen',
+    mock_analysis:'Analyse',
+    dl_badge:'Kostenloser Download — Lizenz erforderlich',
+    dl_title_1:'Herunterladen',
+    dl_desc:'Laden Sie die Software kostenlos herunter. Erfordert eine aktive Lizenz, die an Ihr Gerät gebunden ist. Kontaktieren Sie uns über WhatsApp.',
+    dl_spec_size:'48.7 MB · .exe Installer', dl_spec_ver:'v5.0.0 · 2026-06-01',
+    dl_spec_support:'Kontinuierlicher Support',
+    dl_btn_main:'Jetzt herunterladen — Kostenlos', dl_btn_alt:'Lizenz erhalten',
+    dl_size:'Größe', dl_os:'Betriebssystem', dl_arch:'Architektur',
+    dl_release:'Veröffentlichungsdatum', dl_lang_count:'Sprachen', dl_lang_count_v:'Sprachen',
+    dl_modal_ver:'v5.0.0 — Windows x64',
+    dl_license_req:'Lizenz', dl_license_req_v:'Erforderlich (HWID)',
+    dl_modal_cta:'Software herunterladen',
+    dl_modal_note:'Kontaktieren Sie uns über WhatsApp für Download-Link und Lizenz · +970 595 438 486',
+    pip_title_1:'Integrierte', pip_title_2:'Verarbeitungs-Pipeline',
+    pip_desc:'Jede BIN-Datei durchläuft 7 aufeinanderfolgende Stufen für maximale Genauigkeit und Sicherheit',
+    pip_s1:'Automatische Software-ID-Extraktion', pip_s2:'DPF/EGR/SCR/IMMO-Erkennung',
+    pip_s3:'Mustererkennung mit Maskenunterstützung', pip_s4:'Kontextvalidierung',
+    pip_s5:'Korrekturen innerhalb Sicherheitsgrenzen', pip_s6:'Automatische Prüfsummenaktualisierung',
+    pip_s7:'Diffs speichern und Skripte generieren',
+    feat_title_1:'Vollständiges', feat_title_2:'Funktionsset',
+    feat_desc:'Ein umfassendes Tool für alle professionellen ECU-Kalibrierungsanforderungen',
+    f1_desc:'Vollständiges Auto-Tuning in drei Stufen: Stage 1 (+10%), Stage 2 (+20%), Stage 3 (+30%) mit intelligenten Sicherheitsgrenzen.',
+    f2_desc:'Kraftstoff- und Ladedruck-Karten anzeigen und bearbeiten mit farbiger Visualisierung. Unterstützt uint8/uint16/float32 mit 16×16 Raster.',
+    f3_desc:'DPF, EGR löschen und Wegfahrsperre mit einem Klick deaktivieren mit automatischer Sicherung.',
+    f4_desc:'Erweitertes JSON-Skript-Engine mit Mustererkennung, Kontextvalidierung und automatischer Generierung.',
+    f5_desc:'Auspuff-Knaller in drei Stufen: Mild, Aggressive, Full Crackle mit Feinabstimmung.',
+    f6_desc:'Bestätigte Diffs aufzeichnen und automatische Skripte generieren.',
+    f7_desc:'Zwei BIN-Dateien Byte für Byte vergleichen und Unterschiede anzeigen.',
+    f8_desc:'OBD-II-Protokolle von ELM327 analysieren mit PID-Dekodierung und Fehlercodeanzeige.',
+    f9_desc:'Vollständige Binärkonvertierung: BIN ↔ Intel HEX ↔ Motorola S-Record mit Prüfsummenverifizierung.',
+    f10_desc:'Kundenverwaltung und vollständiges Auftragsprotokoll mit CSV-Export und Suche.',
+    f11_desc:'Professionelle HTML- und PDF-Berichte mit Analyseergebnissen und Kundendaten generieren.',
+    f12_desc:'Vollständige Unterstützung für Arabisch, Englisch, Französisch, Deutsch und Türkisch mit RTL-Design.',
+    db_title_1:'Umfassende', db_title_2:'ECU-Datenbank',
+    db_desc:'Vollständige Abdeckung der Top-ECU-Hersteller — Diesel, Benzin und Getriebe',
+    tbl_variant:'Variante', tbl_mfr:'Hersteller', tbl_desc:'Beschreibung', tbl_type:'Typ',
+    diff_title_1:'Automatischer', diff_title_2:'Lern-Engine',
+    diff_desc:'Jede bestätigte Operation wird automatisch gespeichert — ein fertiges JSON-Skript mit einem Klick generieren',
+    diff_total:'GESAMT DIFFS', diff_scripts:'AUTO SKRIPTE',
+    sup_title_1:'Technischer', sup_title_2:'Support',
+    sup_desc:'ECU-Kalibrierungsexperte rund um die Uhr verfügbar für Installation, Betrieb und Lizenzierung',
+    sup_name:'Fares Mansour',
+    sup_bio:'Spezialist für elektronische Steuergeräte-Kalibrierung. Rund um die Uhr für technischen Support, Schulungen und Lizenzen verfügbar.',
+    sup_wa_btn:'Über WhatsApp kontaktieren', sup_call_btn:'Direktanruf',
+    sf1_title:'Gerätgebundene Lizenz', sf1_desc:'An die HWID Ihres Geräts gebunden. Lokale Überprüfung ohne Internet.',
+    sf2_title:'Kontinuierliche Updates', sf2_desc:'Regelmäßiges Hinzufügen neuer ECU-Varianten und Verbesserungen.',
+    sf3_title:'Automatische Sicherung', sf3_desc:'Jede Operation erstellt eine zeitgestempelte Sicherung vor Änderungen.',
+    sf4_title:'24/7-Support', sf4_desc:'Technischer Support rund um die Uhr über WhatsApp. Schnelle Antwort.',
+    lic_title_1:'Lizenz-', lic_title_2:'Pläne',
+    lic_desc:'Wählen Sie den richtigen Plan. Alle Pläne beinhalten gerätgebundene Lizenzierung',
+    lic_contact:'Kontakt', lic_custom:'Individueller Preis auf Anfrage',
+    lic_popular:'Am Beliebtesten', lic_contact_btn:'Kontakt für Preis',
+    lic_ent_period:'Für Unternehmen und große Zentren', lic_ent_btn:'Kontaktieren Sie uns',
+    lb1:'Grundlegende BIN-Dateianalyse', lb2:'Automatische Variantenerkennung', lb3:'Kraftstoff- & Boostkarten',
+    lb8:'PDF / HTML Berichte',
+    lp1:'Alle Basic-Funktionen', lp8:'Prioritäts-Updates',
+    le1:'Alle Professional-Funktionen', le2:'Multi-Gerät-Lizenz',
+    le3:'Benutzerdefinierte Datenbank', le4:'Spezialisiertes Training & Dokumentation',
+    le5:'Höchste Support-Priorität', le6:'Benutzerdefinierte ECU-Ergänzung',
+    le7:'Sofortige Updates', le8:'Jährlicher Wartungsvertrag',
+    lic_note_title:'Lizenz an Machine ID (HWID) gebunden',
+    lic_note_desc:'Bei der Aktivierung wird die Lizenz an den einzigartigen Fingerabdruck Ihres Geräts gebunden. Lokale Überprüfung ohne Internet.',
+    foot_desc:'Professionelle integrierte Suite für ECU-Analyse und -Kalibrierung. Für Automobil- und Tuning-Profis konzipiert.',
+    foot_features:'Funktionen', foot_contact:'Kontakt', foot_wa:'Jetzt kontaktieren',
+  },
+  tr: {
+    nav_pipeline:'Boru Hattı', nav_features:'Özellikler', nav_db:'ECU Veritabanı',
+    nav_download:'İndir', nav_support:'Destek', nav_license:'Lisanslar',
+    nav_cta:'Lisans Al',
+    hero_badge:'Sürüm 5.0 — 7 Entegre Aşama',
+    hero_sub:'Profesyonel ECU Kalibrasyon Paketi',
+    hero_desc:'BIN dosya analizi ve ECU kalibrasyonu için 7 aşamalı kapsamlı bir araç. Bosch, Delphi, Siemens, Marelli, Continental, Denso ve daha fazlasından 32+ varyantı destekler.',
+    hero_dl_btn:'Yazılımı İndir', hero_explore:'Özellikleri Keşfet',
+    stat_lang:'Diller',
+    mock_analysis:'Analiz',
+    dl_badge:'Ücretsiz İndir — Lisans Gerekli',
+    dl_title_1:'İndir',
+    dl_desc:'Yazılımı ücretsiz indirin ve denemeye başlayın. Cihazınıza bağlı aktif bir lisans gerektirir. Lisans için WhatsApp üzerinden iletişime geçin.',
+    dl_spec_size:'48.7 MB · .exe Yükleyici', dl_spec_ver:'v5.0.0 · 2026-06-01',
+    dl_spec_support:'Sürekli Destek',
+    dl_btn_main:'Şimdi İndir — Ücretsiz', dl_btn_alt:'Lisans Al',
+    dl_size:'Boyut', dl_os:'İşletim Sistemi', dl_arch:'Mimari',
+    dl_release:'Yayın Tarihi', dl_lang_count:'Diller', dl_lang_count_v:'dil',
+    dl_modal_ver:'v5.0.0 — Windows x64',
+    dl_license_req:'Lisans', dl_license_req_v:'Gerekli (HWID)',
+    dl_modal_cta:'Yazılımı İndir',
+    dl_modal_note:'İndirme linki ve lisans için WhatsApp üzerinden iletişime geçin · +970 595 438 486',
+    pip_title_1:'Entegre', pip_title_2:'İşlem Boru Hattı',
+    pip_desc:'Her BIN dosyası, herhangi bir değişiklik kaydedilmeden önce maksimum doğruluk ve güvenliği sağlamak için 7 aşamadan geçer',
+    pip_s1:'Otomatik yazılım kimliği çıkarma', pip_s2:'DPF/EGR/SCR/IMMO tespiti',
+    pip_s3:'Maske desteğiyle desen eşleştirme', pip_s4:'Güvenlik için bağlam doğrulama',
+    pip_s5:'Güvenlik sınırları dahilinde düzeltme uygulama', pip_s6:'Otomatik sağlama toplamı güncelleme',
+    pip_s7:'Farkları saklama ve komut dosyaları oluşturma',
+    feat_title_1:'Tam', feat_title_2:'Özellik Seti',
+    feat_desc:'Tüm profesyonel ECU kalibrasyon ihtiyaçlarını karşılayan kapsamlı bir araç',
+    f1_desc:'Üç aşamalı tam otomatik ayar: Stage 1 (+%10), Stage 2 (+%20), Stage 3 (+%30) akıllı güvenlik limitleriyle.',
+    f2_desc:'Renkli görselleştirme ile ayrıntılı yakıt ve basınç haritalarını görüntüleyin ve düzenleyin. uint8/uint16/float32 ve 16×16 ızgara desteği.',
+    f3_desc:'Otomatik yedekleme ile tek tıklamayla DPF, EGR silme ve immobilizer devre dışı bırakma.',
+    f4_desc:'Desen eşleştirme, bağlam doğrulama ve otomatik oluşturma ile gelişmiş JSON betik motoru.',
+    f5_desc:'Egzoz patlama sesini üç seviyede etkinleştirin: Mild, Aggressive, Full Crackle.',
+    f6_desc:'Onaylı farkları kaydedin ve otomatik komut dosyaları oluşturun. Ne kadar çok kullanırsanız o kadar akıllı olur.',
+    f7_desc:'İki BIN dosyasını byte byte karşılaştırın ve farklılıkları görüntüleyin.',
+    f8_desc:'ELM327\'den OBD-II günlüklerini ve CAN günlüklerini PID kod çözme ve hata kodu görüntüleme ile analiz edin.',
+    f9_desc:'Tam ikili dönüştürme: BIN ↔ Intel HEX ↔ Motorola S-Record checksum doğrulamasıyla.',
+    f10_desc:'CSV dışa aktarma ve arama ile tam iş günlüğü ve müşteri yönetimi.',
+    f11_desc:'Analiz sonuçları, değişiklik günlüğü ve müşteri verileri içeren profesyonel HTML ve PDF raporları oluşturun.',
+    f12_desc:'RTL tasarımı ve koyu/açık tema ile Arapça, İngilizce, Fransızca, Almanca ve Türkçe tam desteği.',
+    db_title_1:'Kapsamlı', db_title_2:'ECU Veritabanı',
+    db_desc:'Global piyasadaki önde gelen ECU üreticilerinin tam kapsamı — dizel, benzin ve şanzıman',
+    tbl_variant:'Varyant', tbl_mfr:'Üretici', tbl_desc:'Açıklama', tbl_type:'Tip',
+    diff_title_1:'Otomatik', diff_title_2:'Öğrenme Motoru',
+    diff_desc:'Her onaylanan işlem otomatik olarak depolanır — tek tıklamayla hazır JSON betiği oluşturun',
+    diff_total:'TOPLAM FARK', diff_scripts:'OTO BETİKLER',
+    sup_title_1:'Teknik', sup_title_2:'Destek',
+    sup_desc:'Kurulum, işletim ve lisanslama konusunda yardım için 7/24 ECU kalibrasyon uzmanı',
+    sup_name:'Fares Mansour',
+    sup_bio:'Araçlar için elektronik kontrol birimi kalibrasyonu uzmanı. Teknik destek, eğitim ve lisanslama için 7/24 hizmetinizdeyim.',
+    sup_wa_btn:'WhatsApp ile İletişim', sup_call_btn:'Doğrudan Arama',
+    sf1_title:'Cihaza Bağlı Lisans', sf1_desc:'Cihazınızın HWID\'sine bağlı. İnternet olmadan yerel doğrulama.',
+    sf2_title:'Sürekli Güncellemeler', sf2_desc:'Tüm lisans sahipleri için periyodik olarak yeni ECU varyantları ve iyileştirmeler.',
+    sf3_title:'Otomatik Yedekleme', sf3_desc:'Her işlem değişiklikten önce zaman damgalı yedek oluşturur.',
+    sf4_title:'7/24 Destek', sf4_desc:'Teknik destek WhatsApp üzerinden 7/24 mevcuttur. Hızlı yanıt.',
+    lic_title_1:'Lisans', lic_title_2:'Planları',
+    lic_desc:'Doğru planı seçin. Tüm planlar cihaza bağlı lisanslama ve yerel doğrulama içerir',
+    lic_contact:'İletişim', lic_custom:'Talep üzerine özel fiyatlandırma',
+    lic_popular:'En Çok Talep Edilen', lic_contact_btn:'Fiyat için İletişim',
+    lic_ent_period:'Şirketler ve büyük merkezler için', lic_ent_btn:'Bize Ulaşın',
+    lb1:'Temel BIN dosya analizi', lb2:'Otomatik varyant tespiti', lb3:'Yakıt ve Boost Haritaları',
+    lb8:'PDF / HTML Raporları',
+    lp1:'Tüm Basic özellikleri', lp8:'Öncelikli güncellemeler',
+    le1:'Tüm Professional özellikleri', le2:'Çoklu cihaz lisansı',
+    le3:'Özel veritabanı', le4:'Özel eğitim ve dokümantasyon',
+    le5:'En yüksek destek önceliği', le6:'Özel ECU ekleme',
+    le7:'Anlık güncellemeler', le8:'Yıllık bakım sözleşmesi',
+    lic_note_title:'Lisans Machine ID (HWID) ile bağlantılı',
+    lic_note_desc:'Etkinleştirmede lisans cihazınızın benzersiz parmak izine bağlanır. İnternet olmadan yerel doğrulama.',
+    foot_desc:'ECU analizi ve kalibrasyonu için profesyonel entegre paket. Otomotiv ve tuning profesyonelleri için tasarlanmıştır.',
+    foot_features:'Özellikler', foot_contact:'İletişim', foot_wa:'Şimdi İletişim',
+  }
+};
 
-// Scroll nav shadow
-window.addEventListener('scroll',()=>{
-  document.getElementById('nav').style.boxShadow=
-    window.scrollY>10?'0 1px 30px rgba(0,0,0,.4)':'none';
+const RTL_LANGS = ['ar'];
+let currentLang = 'ar';
+
+const langMeta = {
+  ar:{flag:'🇸🇦',label:'AR'},
+  en:{flag:'🇬🇧',label:'EN'},
+  fr:{flag:'🇫🇷',label:'FR'},
+  de:{flag:'🇩🇪',label:'DE'},
+  tr:{flag:'🇹🇷',label:'TR'},
+};
+
+function setLang(lang) {
+  currentLang = lang;
+  const t = T[lang];
+  const isRTL = RTL_LANGS.includes(lang);
+
+  // Update HTML dir/lang
+  document.documentElement.lang = lang;
+  document.body.classList.toggle('ltr', !isRTL);
+
+  // Update all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+
+  // Update lang button
+  document.getElementById('langFlag').textContent = langMeta[lang].flag;
+  document.getElementById('langLabel').textContent = langMeta[lang].label;
+
+  // Update active state
+  document.querySelectorAll('.lang-option').forEach(o => {
+    o.classList.toggle('active', o.dataset.lang === lang);
+  });
+
+  // Close dropdown
+  document.getElementById('langDropdown').classList.remove('open');
+
+  // Update page title
+  const titles = {
+    ar:'ECU Intelligence Pro v5 — منظومة معايرة احترافية',
+    en:'ECU Intelligence Pro v5 — Professional Calibration Suite',
+    fr:'ECU Intelligence Pro v5 — Suite de Calibration Professionnelle',
+    de:'ECU Intelligence Pro v5 — Professionelle Kalibrierungs-Suite',
+    tr:'ECU Intelligence Pro v5 — Profesyonel Kalibrasyon Paketi',
+  };
+  document.title = titles[lang];
+
+  // Update pipeline arrow direction
+  document.querySelectorAll('.pip-step::before').forEach(()=>{});
+
+  // Save preference
+  try { localStorage.setItem('ecu_lang', lang); } catch(e){}
+}
+
+function toggleLang() {
+  document.getElementById('langDropdown').classList.toggle('open');
+}
+
+// Close lang on outside click
+document.addEventListener('click', e => {
+  const ls = document.getElementById('langSwitcher');
+  if (!ls.contains(e.target)) {
+    document.getElementById('langDropdown').classList.remove('open');
+  }
 });
 
-// Fade-in on scroll
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach((e,i)=>{
-    if(e.isIntersecting){
-      setTimeout(()=>e.target.classList.add('vis'),(e.target.dataset.d||0)*70);
+// ══════════════ DOWNLOAD MODAL ══════════════
+function openDlModal() {
+  document.getElementById('dlModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDlModal() {
+  document.getElementById('dlModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('dlModal').addEventListener('click', function(e) {
+  if (e.target === this) closeDlModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeDlModal();
+});
+
+// ══════════════ HAMBURGER ══════════════
+const ham = document.getElementById('ham');
+const mob = document.getElementById('mobMenu');
+ham.addEventListener('click', () => {
+  ham.classList.toggle('open');
+  mob.classList.toggle('open');
+});
+function closeMob() {
+  ham.classList.remove('open');
+  mob.classList.remove('open');
+}
+document.addEventListener('click', e => {
+  const nav = document.getElementById('nav');
+  if (!nav.contains(e.target) && !mob.contains(e.target)) closeMob();
+});
+
+// ══════════════ NAV SHADOW ══════════════
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').style.boxShadow =
+    window.scrollY > 10 ? '0 1px 30px rgba(0,0,0,.4)' : 'none';
+});
+
+// ══════════════ FADE-IN ══════════════
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('vis'), (e.target.dataset.d || 0) * 70);
       obs.unobserve(e.target);
     }
   });
-},{threshold:.07,rootMargin:'0px 0px -30px 0px'});
-document.querySelectorAll('.fi').forEach((el,i)=>{el.dataset.d=i%8;obs.observe(el)});
+}, { threshold: .07, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.fi').forEach((el, i) => { el.dataset.d = i % 8; obs.observe(el); });
 
-// Nav active highlight
-const sects=document.querySelectorAll('section[id]');
-const nlinks=document.querySelectorAll('.nav-links a[href^="#"]');
-window.addEventListener('scroll',()=>{
-  let cur='';
-  sects.forEach(s=>{if(window.scrollY>=s.offsetTop-100)cur=s.id});
-  nlinks.forEach(a=>{
-    const active=a.getAttribute('href')==='#'+cur&&!a.classList.contains('nav-cta');
-    a.style.color=active?'var(--accent)':'';
-    a.style.background=active?'rgba(249,115,22,.07)':'';
+// ══════════════ NAV ACTIVE ══════════════
+const sects = document.querySelectorAll('section[id]');
+const nlinks = document.querySelectorAll('.nav-links a[href^="#"]');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sects.forEach(s => { if (window.scrollY >= s.offsetTop - 100) cur = s.id; });
+  nlinks.forEach(a => {
+    const active = a.getAttribute('href') === '#' + cur && !a.classList.contains('nav-cta');
+    a.style.color = active ? 'var(--accent)' : '';
+    a.style.background = active ? 'rgba(249,115,22,.07)' : '';
   });
 });
 
-// Pipeline steps glow
-document.querySelectorAll('.pip-step').forEach(s=>{
-  s.addEventListener('mouseenter',()=>s.style.boxShadow='0 0 22px rgba(249,115,22,.14)');
-  s.addEventListener('mouseleave',()=>s.style.boxShadow='');
+// ══════════════ PIPELINE GLOW ══════════════
+document.querySelectorAll('.pip-step').forEach(s => {
+  s.addEventListener('mouseenter', () => s.style.boxShadow = '0 0 22px rgba(249,115,22,.14)');
+  s.addEventListener('mouseleave', () => s.style.boxShadow = '');
 });
+
+// ══════════════ RESTORE LANG ══════════════
+try {
+  const saved = localStorage.getItem('ecu_lang');
+  if (saved && T[saved]) setLang(saved);
+} catch(e) {}
 </script>
 </body>
 </html>
